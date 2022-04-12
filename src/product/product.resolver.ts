@@ -1,4 +1,5 @@
 import { Resolver } from '@nestjs/graphql';
+
 import { ProductService } from './product.service';
 
 @Resolver()

@@ -1,4 +1,5 @@
 import { Resolver } from '@nestjs/graphql';
+
 import { UserService } from './user.service';
 
 @Resolver()
