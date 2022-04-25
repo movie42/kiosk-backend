@@ -23,7 +23,6 @@ jobs:
           port: ${{secrets.PORT }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
-
           script: |
             cd ${{ secrets.WEB_PATH }} && git pull
             yarn
