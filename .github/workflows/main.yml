@@ -17,7 +17,7 @@ jobs:
 
       - name: executing remote ssh commands using password
         if: github.event_name == 'pull_request'
-        uses: appleboy/ssh-action@v0.1.4
+        uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
           port: ${{secrets.PORT }}
@@ -27,4 +27,4 @@ jobs:
             cd ${{ secrets.WEB_PATH }} && git pull
             yarn
             yarn build
-            yarn start
+            node src/dist/main
