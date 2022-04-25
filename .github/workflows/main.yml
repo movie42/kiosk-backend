@@ -20,9 +20,9 @@ jobs:
         uses: appleboy/ssh-action@v0.1.4
         with:
           host: ${{ secrets.HOST }}
+          port: ${{secrets.PORT }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
-          port: ${{secrets.PORT }}
           script: |
             cd ${{ secrets.WEB_PATH }} && git pull
             yarn
