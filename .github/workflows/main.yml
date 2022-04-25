@@ -27,4 +27,4 @@ jobs:
             cd ${{ secrets.WEB_PATH }} && git pull
             yarn
             yarn build
-            yarn start
+            node src/dist/main
