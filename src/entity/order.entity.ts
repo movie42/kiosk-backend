@@ -1,17 +1,7 @@
 import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  OneToMany,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
-import { OrderProduct } from './order-product';
-import { Store } from './store';
+import { OrderProduct } from './order-product.entity';
 
 @ObjectType()
 @Entity()
@@ -37,10 +27,6 @@ export class Order {
 
   @UpdateDateColumn()
   updatedAt: Date;
-
-  @ManyToOne(() => Store, (entity) => entity.orders, { createForeignKeyConstraints: false })
-  @JoinColumn({ name: 'storeId' })
-  store: Store;
 
   @OneToMany(() => OrderProduct, (item) => item.order)
   orderProducts: OrderProduct[];
