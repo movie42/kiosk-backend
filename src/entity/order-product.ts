@@ -34,7 +34,7 @@ export class OrderProduct {
   @JoinColumn({ name: 'orderId' })
   order: Order;
 
-  @ManyToOne(() => Product, (entity) => entity.orderProducts, { createForeignKeyConstraints: false })
+  @ManyToOne(() => Product, (entity) => entity.orders, { createForeignKeyConstraints: false })
   @JoinColumn({ name: 'productId' })
   product: Product;
 }

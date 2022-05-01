@@ -5,7 +5,7 @@ import { Product } from './product';
 
 @ObjectType()
 @Entity()
-export class ProductOption {
+export class Option {
   @Field(() => ID)
   @PrimaryGeneratedColumn({ type: 'int', unsigned: true })
   id: number;
@@ -21,7 +21,7 @@ export class ProductOption {
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 
-  @ManyToOne(() => Product, (entity) => entity.productOptions, { createForeignKeyConstraints: false })
+  @ManyToOne(() => Product, (entity) => entity.options, { createForeignKeyConstraints: false })
   @JoinColumn({ name: 'productId' })
   product: Product;
 }

@@ -1,8 +1,8 @@
 import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
+import { Option } from './option';
 import { OrderProduct } from './order-product';
-import { ProductOption } from './product-option';
 import { Store } from './store';
 
 @ObjectType()
@@ -39,9 +39,9 @@ export class Product {
   @JoinColumn({ name: 'storeId' })
   store: Store;
 
-  @OneToMany(() => ProductOption, (item) => item.product)
-  productOptions: ProductOption[];
+  @OneToMany(() => Option, (item) => item.product)
+  options: Option[];
 
   @OneToMany(() => OrderProduct, (item) => item.product)
-  orderProducts: OrderProduct[];
+  orders: OrderProduct[];
 }
