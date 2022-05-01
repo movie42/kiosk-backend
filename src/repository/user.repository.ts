@@ -9,6 +9,7 @@ export class UserRepository extends Repository<User> {
   }
 
   async addUser(user: Pick<User, 'email' | 'name' | 'password'>) {
-    return this.save(this.create(user));
+    await this.save(this.create(user));
+    return true;
   }
 }
