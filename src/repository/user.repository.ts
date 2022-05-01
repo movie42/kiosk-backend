@@ -1,0 +1,15 @@
+import { EntityRepository, Repository } from 'typeorm';
+
+import { User } from '../entity/user.entity';
+
+@EntityRepository(User)
+export class UserRepository extends Repository<User> {
+  async getUsers() {
+    return this.find();
+  }
+
+  async addUser(user: Pick<User, 'email' | 'name' | 'password'>) {
+    await this.save(this.create(user));
+    return true;
+  }
+}
