@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
-import { StoreRepository } from '../repository/store.repository';
 import { IAddStore } from './interface/add-store.interface';
+import { StoreRepository } from './repository/store.repository';
 
 @Injectable()
 export class StoreService {

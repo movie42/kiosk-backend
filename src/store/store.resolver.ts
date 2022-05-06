@@ -1,7 +1,7 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
-import { Store } from '../entity/store.entity';
 import { AddStoreInput } from './dto/add-store.input';
+import { Store } from './entity/store.entity';
 import { StoreService } from './store.service';
 
 @Resolver()

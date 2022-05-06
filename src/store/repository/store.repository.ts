@@ -1,7 +1,7 @@
 import { EntityRepository, Repository } from 'typeorm';
 
 import { Store } from '../entity/store.entity';
-import { IAddStore } from '../store/interface/add-store.interface';
+import { IAddStore } from '../interface/add-store.interface';
 
 @EntityRepository(Store)
 export class StoreRepository extends Repository<Store> {
