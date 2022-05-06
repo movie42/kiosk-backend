@@ -10,6 +10,12 @@ export class UserService {
     return this.userRepository.getUsers();
   }
 
+  async getUserByEmail(email: string) {
+    const user = this.userRepository.getUserByEmail(email);
+
+    return user;
+  }
+
   async addUser(args: IAddUser) {
     return this.userRepository.addUser(args);
   }
