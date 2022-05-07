@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
-import { User } from '../entity/user.entity';
-import { UserRepository } from '../repository/user.repository';
+import { IAddUser } from './interface/add-user.interface';
+import { UserRepository } from './repository/user.repository';
 
 @Injectable()
 export class UserService {
@@ -10,7 +10,7 @@ export class UserService {
     return this.userRepository.getUsers();
   }
 
-  async addUser(args: Pick<User, 'email' | 'name' | 'password'>) {
+  async addUser(args: IAddUser) {
     return this.userRepository.addUser(args);
   }
 }
