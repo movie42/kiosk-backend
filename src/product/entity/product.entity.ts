@@ -39,6 +39,7 @@ export class Product {
   @JoinColumn({ name: 'storeId' })
   store: Store;
 
+  @Field(() => [Option])
   @OneToMany(() => Option, (item) => item.product)
   options: Option[];
 
