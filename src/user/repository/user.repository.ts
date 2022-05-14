@@ -24,4 +24,9 @@ export class UserRepository {
     await this.repository.update(userId, { name });
     return true;
   }
+
+  async removeUser(userId: number) {
+    await this.repository.softDelete(userId);
+    return true;
+  }
 }
