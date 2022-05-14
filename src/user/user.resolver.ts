@@ -3,6 +3,7 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { Roles } from '../common/decorator';
 import { Role } from '../common/enum';
 import { AddUserInput } from './dto/add-user.input';
+import { UpdateUserArgs } from './dto/update-user.args';
 import { User } from './entity/user.entity';
 import { UserService } from './user.service';
 
@@ -19,5 +20,10 @@ export class UserResolver {
   @Mutation(() => Boolean)
   async addUser(@Args('user') args: AddUserInput) {
     return this.userService.addUser(args);
+  }
+
+  @Mutation(() => Boolean)
+  async updateUser(@Args() args: UpdateUserArgs) {
+    return this.userService.updateUser(args.userId, args.name);
   }
 }
