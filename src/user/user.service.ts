@@ -10,7 +10,15 @@ export class UserService {
     return this.userRepository.getUsers();
   }
 
+  async getUserByEmail(email: string) {
+    return this.userRepository.getUserByEmail(email);
+  }
+
   async addUser(args: IAddUser) {
     return this.userRepository.addUser(args);
+  }
+
+  async updateUser(userId: number, name: string) {
+    return this.userRepository.updateUser(userId, name);
   }
 }
