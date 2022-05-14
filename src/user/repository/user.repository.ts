@@ -1,16 +1,20 @@
-import { EntityRepository, Repository } from 'typeorm';
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 import { User } from '../entity/user.entity';
 import { IAddUser } from '../interface/add-user.interface';
 
-@EntityRepository(User)
-export class UserRepository extends Repository<User> {
+@Injectable()
+export class UserRepository {
+  constructor(@InjectRepository(User) private repository: Repository<User>) {}
+
   async getUsers() {
-    return this.find();
+    return this.repository.find();
   }
 
   async addUser(user: IAddUser) {
-    await this.save(this.create(user));
+    await this.repository.save(this.repository.create(user));
     return true;
   }
 }

@@ -1,25 +1,29 @@
-import { EntityRepository, Repository } from 'typeorm';
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 import { Store } from '../entity/store.entity';
 import { IAddStore } from '../interface/add-store.interface';
 
-@EntityRepository(Store)
-export class StoreRepository extends Repository<Store> {
+@Injectable()
+export class StoreRepository {
+  constructor(@InjectRepository(Store) private repository: Repository<Store>) {}
+
   async getStoreById(id: number) {
-    return this.findOne(id);
+    return this.repository.findOneBy({ id });
   }
 
   async getStores() {
-    return this.find();
+    return this.repository.find();
   }
 
   async addStore(args: IAddStore) {
-    await this.save(this.create(args));
+    await this.repository.save(this.repository.create(args));
     return true;
   }
 
   async removeStore(id: number) {
-    await this.delete(id);
+    await this.repository.delete(id);
     return true;
   }
 }
