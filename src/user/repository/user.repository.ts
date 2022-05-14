@@ -22,6 +22,5 @@ export class UserRepository {
 
   async updateUser(userId: number, name: string) {
     await this.repository.update(userId, { name });
-    return true;
   }
 }
