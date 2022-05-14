@@ -20,8 +20,8 @@ export class ProductService {
 
   async addProducts(products: IAddProduct[]) {
     for (const product of products) {
-      const cnt = await this.productRepository.getProductsNumberByStoreIdAndName(product.storeId, product.name);
-      if (cnt == 0) {
+      const isExistNameOnStore = await this.productRepository.existsStoreProductByName(product.storeId, product.name);
+      if (!isExistNameOnStore) {
         await this.productRepository.addProduct(product);
       } else {
         return false;
@@ -30,14 +30,14 @@ export class ProductService {
     return true;
   }
 
-  async deleteProducts(keys: number[]) {
-    for (const key of keys) {
-      await this.productRepository.deleteProduct(key);
+  async removeProducts(productIds: number[]) {
+    for (const productId of productIds) {
+      await this.productRepository.deleteProduct(productId);
     }
     return true;
   }
 
-  async editProducts(products: IEditProduct[]) {
+  async updateProducts(products: IEditProduct[]) {
     for (const product of products) {
       await this.productRepository.editProduct(product);
     }
@@ -46,8 +46,8 @@ export class ProductService {
 
   async addOptions(options: IAddOption[]) {
     for (const option of options) {
-      const cnt = await this.productRepository.count({ where: { id: option.productId } });
-      if (cnt != 0) {
+      const isExistId = await this.productRepository.existsProductById(option.productId);
+      if (isExistId) {
         await this.productOptionRepository.addOption(option);
       } else {
         return false;
@@ -56,14 +56,14 @@ export class ProductService {
     return true;
   }
 
-  async editOptions(options: IEditOption[]) {
+  async updateOptions(options: IEditOption[]) {
     for (const option of options) {
       await this.productOptionRepository.editOption(option);
     }
     return true;
   }
 
-  async deleteOptions(optionIds: number[]) {
+  async removeOptions(optionIds: number[]) {
     for (const optionId of optionIds) {
       await this.productOptionRepository.deleteOption(optionId);
     }

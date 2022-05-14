@@ -10,8 +10,14 @@ export class ProductRepository extends Repository<Product> {
     return await this.find({ where: { storeId: _storeId }, relations: ['options'] });
   }
 
-  async getProductsNumberByStoreIdAndName(_storeId: number, _name: string) {
-    return await this.count({ where: { storeId: _storeId, name: _name } });
+  async existsStoreProductByName(storeId: number, name: string) {
+    const cnt = await this.count({ where: { storeId: storeId, name: name } });
+    return cnt != 0;
+  }
+
+  async existsProductById(id: number) {
+    const cnt = await this.count({ where: { id: id } });
+    return cnt != 0;
   }
 
   async addProduct(product: IAddProduct) {

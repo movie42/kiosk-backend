@@ -10,9 +10,9 @@ import { ProductService } from './product.service';
 @Resolver()
 export class ProductResolver {
   constructor(private readonly productService: ProductService) {}
-  @Query(() => [Product], { nullable: 'items' })
+  @Query(() => [Product])
   async products(@Args({ name: 'storeId', type: () => Number }) storeId: number) {
-    return await this.productService.getProducts(storeId);
+    return this.productService.getProducts(storeId);
   }
 
   @Mutation(() => Boolean)
@@ -23,30 +23,30 @@ export class ProductResolver {
   // 소유자 권한 체크 필요
   @Mutation(() => Boolean)
   async editProducts(@Args({ name: 'products', type: () => [EditProductInput] }) args: EditProductInput[]) {
-    return await this.productService.editProducts(args);
+    return this.productService.updateProducts(args);
   }
 
   @Mutation(() => [Boolean])
   async deleteProducts(@Args({ name: 'product_keys', type: () => [Number] }) args: number[]) {
-    return await this.productService.deleteProducts(args);
+    return await this.productService.removeProducts(args);
   }
 
   @Mutation(() => [Boolean])
   async addProductOptions(
     @Args({ name: 'option', type: () => [AddProductOptionInput] }) args: AddProductOptionInput[],
   ) {
-    return await this.productService.addOptions(args);
+    return this.productService.addOptions(args);
   }
 
   @Mutation(() => Boolean)
   async editProductOptions(
     @Args({ name: 'option', type: () => [EditProductOptionInput] }) args: EditProductOptionInput[],
   ) {
-    return await this.productService.editOptions(args);
+    return this.productService.updateOptions(args);
   }
 
   @Mutation(() => Boolean)
   async deleteProductOptions(@Args({ name: 'option_id', type: () => [Number] }) args: number[]) {
-    return await this.productService.deleteOptions(args);
+    return this.productService.removeOptions(args);
   }
 }
