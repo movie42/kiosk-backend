@@ -19,61 +19,54 @@ export class ProductService {
   }
 
   async addProducts(products: IAddProduct[]) {
-    const suc: boolean[] = [];
     for (const product of products) {
-      const cnt: number = await this.productRepository.getProductsNumberByStoreIdAndName(product.storeId, product.name);
+      const cnt = await this.productRepository.getProductsNumberByStoreIdAndName(product.storeId, product.name);
       if (cnt == 0) {
-        suc.push(await this.productRepository.addProduct(product));
+        await this.productRepository.addProduct(product);
       } else {
-        suc.push(false);
+        return false;
       }
     }
-    return suc;
+    return true;
   }
 
   async deleteProducts(keys: number[]) {
-    const suc: boolean[] = [];
     for (const key of keys) {
-      suc.push(await this.productRepository.deleteProduct(key));
+      await this.productRepository.deleteProduct(key);
     }
-    return suc;
+    return true;
   }
 
   async editProducts(products: IEditProduct[]) {
-    const suc: boolean[] = [];
     for (const product of products) {
-      suc.push(await this.productRepository.editProduct(product));
+      await this.productRepository.editProduct(product);
     }
-    return suc;
+    return true;
   }
 
   async addOptions(options: IAddOption[]) {
-    const suc: boolean[] = [];
-
     for (const option of options) {
       const cnt = await this.productRepository.count({ where: { id: option.productId } });
       if (cnt != 0) {
-        suc.push(await this.productOptionRepository.addOption(option));
+        await this.productOptionRepository.addOption(option);
       } else {
-        suc.push(false);
+        return false;
       }
     }
-    return suc;
+    return true;
   }
 
   async editOptions(options: IEditOption[]) {
-    const suc: boolean[] = [];
     for (const option of options) {
-      suc.push(await this.productOptionRepository.editOption(option));
+      await this.productOptionRepository.editOption(option);
     }
-    return suc;
+    return true;
   }
 
   async deleteOptions(optionIds: number[]) {
-    const suc: boolean[] = [];
     for (const optionId of optionIds) {
-      suc.push(await this.productOptionRepository.deleteOption(optionId));
+      await this.productOptionRepository.deleteOption(optionId);
     }
-    return suc;
+    return true;
   }
 }
