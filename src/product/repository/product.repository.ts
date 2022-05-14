@@ -9,10 +9,6 @@ export class ProductRepository {
   constructor(@InjectRepository(Product) private repository: Repository<Product>) {}
 
   async getStoreProductsByStoreId(storeId: number) {
-    this.repository
-      .createQueryBuilder('product')
-      .innerJoin('product.storeId', 'storeId')
-      .where('product.storeId = :storeId', { storeId });
-    return true;
+    return this.repository.findBy({ storeId });
   }
 }
