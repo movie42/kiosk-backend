@@ -400,4 +400,7 @@ dist
 
 config/local.js
 
+
+# typeorm
 ormconfig.json
+data-source.ts
