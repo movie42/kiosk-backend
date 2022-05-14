@@ -400,5 +400,4 @@ dist
 
 config/local.js
 
-ormconfig.json
-
+ormconfig.json 
