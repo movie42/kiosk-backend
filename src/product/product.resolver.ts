@@ -26,12 +26,12 @@ export class ProductResolver {
     return this.productService.updateProducts(args);
   }
 
-  @Mutation(() => [Boolean])
+  @Mutation(() => Boolean)
   async deleteProducts(@Args({ name: 'product_keys', type: () => [Number] }) args: number[]) {
     return await this.productService.removeProducts(args);
   }
 
-  @Mutation(() => [Boolean])
+  @Mutation(() => Boolean)
   async addProductOptions(
     @Args({ name: 'option', type: () => [AddProductOptionInput] }) args: AddProductOptionInput[],
   ) {
