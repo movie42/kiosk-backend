@@ -6,9 +6,11 @@ export const RequestInfo = createParamDecorator((data: unknown, ctx: ExecutionCo
     ctx.getType() === 'http' ? ctx.switchToHttp().getRequest() : GqlExecutionContext.create(ctx).getContext().req;
 
   return {
-    user: request.user,
+    user: {
+      id: request.user.id,
+      role: request.user.role,
+    },
     ip: request.ip,
     userAgent: request.get('user-agent'),
-    host: request.headers.host,
   };
 });

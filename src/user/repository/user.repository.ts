@@ -8,13 +8,19 @@ import { IAddUser } from '../interface/add-user.interface';
 @Injectable()
 export class UserRepository {
   constructor(@InjectRepository(User) private repository: Repository<User>) {}
-
   async getUsers() {
     return this.repository.find();
   }
 
+  async getUserByEmail(email: string): Promise<Pick<User, 'id' | 'password'> | null> {
+    return this.repository.findOne({ select: ['id', 'password'], where: { email } });
+  }
+
   async addUser(user: IAddUser) {
-    await this.repository.save(this.repository.create(user));
-    return true;
+    return this.repository.save(this.repository.create(user));
+  }
+
+  async updateUser(userId: number, name: string) {
+    await this.repository.update(userId, { name });
   }
 }
