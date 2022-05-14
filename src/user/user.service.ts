@@ -21,4 +21,8 @@ export class UserService {
   async updateUser(userId: number, name: string) {
     return this.userRepository.updateUser(userId, name);
   }
+
+  async removeUser(userId: number) {
+    return this.userRepository.removeUser(userId);
+  }
 }
