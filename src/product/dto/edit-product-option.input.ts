@@ -1,11 +1,11 @@
-import { Field, InputType } from '@nestjs/graphql';
-import { IsNotEmpty, IsString, IsNumber, IsOptional } from 'class-validator';
+import { Field, InputType, Int } from '@nestjs/graphql';
+import { IsNotEmpty, IsString, IsOptional, IsInt } from 'class-validator';
 
 @InputType()
 export class EditProductOptionInput {
   @IsNotEmpty()
-  @IsNumber()
-  @Field()
+  @IsInt()
+  @Field(() => Int)
   id: number;
 
   @IsOptional()

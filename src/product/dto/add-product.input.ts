@@ -1,5 +1,5 @@
-import { Field, InputType } from '@nestjs/graphql';
-import { IsNotEmpty, IsString, IsNumber, IsInt } from 'class-validator';
+import { Field, InputType, Int } from '@nestjs/graphql';
+import { IsNotEmpty, IsString, IsInt, IsOptional } from 'class-validator';
 
 @InputType()
 export class AddProductInput {
@@ -9,20 +9,22 @@ export class AddProductInput {
   name: string;
 
   @IsNotEmpty()
-  @IsNumber()
-  @Field()
+  @IsInt()
+  @Field(() => Int)
   price: number;
 
   @IsString()
+  @IsOptional()
   @Field()
   imageUrl: string;
 
+  @IsOptional()
   @IsString()
   @Field()
   description: string;
 
   @IsNotEmpty()
   @IsInt()
-  @Field()
+  @Field(() => Int)
   storeId: number;
 }
