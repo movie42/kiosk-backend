@@ -7,7 +7,7 @@ import { ProductOptionRepository } from './repository/product-option.repository'
 import { ProductRepository } from './repository/product.repository';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ProductRepository]), TypeOrmModule.forFeature([ProductOptionRepository])],
+  imports: [TypeOrmModule.forFeature([ProductRepository, ProductOptionRepository])],
   providers: [ProductResolver, ProductService],
 })
 export class ProductModule {}
