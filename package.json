@@ -19,10 +19,10 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "migration:create": "ts-node ./node_modules/typeorm/cli.js migration:create -n ",
-    "migration:generate": "ts-node ./node_modules/typeorm/cli.js migration:generate -n ",
-    "migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run",
-    "migration:revert": "ts-node ./node_modules/typeorm/cli.js migration:revert",
+    "migration:create": "typeorm-ts-node-esm migration:create -d ./src/data-source.ts",
+    "migration:generate": "typeorm-ts-node-esm migration:generate -d ./src/data-source.ts",
+    "migration:run": "typeorm-ts-node-esm migration:run -d ./src/data-source.ts",
+    "migration:revert": "typeorm-ts-node-esm migration:revert -d ./src/data-source.ts",
     "prepare": "husky install"
   },
   "dependencies": {
