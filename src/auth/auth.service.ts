@@ -40,6 +40,6 @@ export class AuthService {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(input.password, salt);
     const user = await this.userService.addUser({ ...input, password: hashedPassword });
-    return { ...this.signJsonWebToken(user.id, Role.ADMIN) };
+    return this.signJsonWebToken(user.id, Role.ADMIN);
   }
 }

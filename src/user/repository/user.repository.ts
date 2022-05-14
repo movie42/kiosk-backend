@@ -19,4 +19,9 @@ export class UserRepository {
   async addUser(user: IAddUser) {
     return this.repository.save(this.repository.create(user));
   }
+
+  async updateUser(userId: number, name: string) {
+    await this.repository.update(userId, { name });
+    return true;
+  }
 }
