@@ -7,4 +7,3 @@ import { OrderService } from './order.service';
   providers: [OrderResolver, OrderService],
 })
 export class OrderModule {}
-// test sss
