@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { Store } from '../../store/entity/store.entity';
+import { Product } from '../entity/product.entity';
 
 @Injectable()
-export class StoreRepository {
-  constructor(@InjectRepository(Store) private repository: Repository<Store>) {}
+export class ProductRepository {
+  constructor(@InjectRepository(Product) private repository: Repository<Product>) {}
 }
