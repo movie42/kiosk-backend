@@ -11,12 +11,12 @@ export class ProductOptionRepository extends Repository<Option> {
     return true;
   }
 
-  async deleteOption(optionId: number) {
+  async removeOption(optionId: number) {
     await this.delete(optionId);
     return true;
   }
 
-  async editOption(option: IEditOption) {
+  async updateOption(option: IEditOption) {
     await this.update(option.id, option);
     return true;
   }

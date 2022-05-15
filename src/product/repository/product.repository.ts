@@ -15,12 +15,12 @@ export class ProductRepository {
 
   async existsStoreProductByName(storeId: number, name: string) {
     const cnt = await this.repository.count({ where: { storeId: storeId, name: name } });
-    return cnt != 0;
+    return cnt > 0;
   }
 
   async existsProductById(id: number) {
     const cnt = await this.repository.count({ where: { id: id } });
-    return cnt != 0;
+    return cnt > 0;
   }
 
   async addProduct(product: IAddProduct) {

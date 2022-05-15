@@ -32,14 +32,14 @@ export class ProductService {
 
   async removeProducts(productIds: number[]) {
     for (const productId of productIds) {
-      await this.productRepository.deleteProduct(productId);
+      await this.productRepository.removeProduct(productId);
     }
     return true;
   }
 
   async updateProducts(products: IEditProduct[]) {
     for (const product of products) {
-      await this.productRepository.editProduct(product);
+      await this.productRepository.updateProduct(product);
     }
     return true;
   }
@@ -58,14 +58,14 @@ export class ProductService {
 
   async updateOptions(options: IEditOption[]) {
     for (const option of options) {
-      await this.productOptionRepository.editOption(option);
+      await this.productOptionRepository.updateOption(option);
     }
     return true;
   }
 
   async removeOptions(optionIds: number[]) {
     for (const optionId of optionIds) {
-      await this.productOptionRepository.deleteOption(optionId);
+      await this.productOptionRepository.removeOption(optionId);
     }
     return true;
   }

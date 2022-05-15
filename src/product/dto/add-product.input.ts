@@ -3,6 +3,10 @@ import { IsString, IsInt, IsOptional } from 'class-validator';
 
 @InputType()
 export class AddProductInput {
+  @IsInt()
+  @Field(() => Int)
+  storeId: number;
+
   @IsString()
   @Field()
   name: string;
@@ -20,8 +24,4 @@ export class AddProductInput {
   @IsString()
   @Field()
   description: string;
-
-  @IsInt()
-  @Field(() => Int)
-  storeId: number;
 }
