@@ -6,7 +6,6 @@ import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
 import { readFileSync } from 'fs';
 
 import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { isProd } from './common/constant';
 import { OrderModule } from './order/order.module';
@@ -43,6 +42,5 @@ import { UserModule } from './user/user.module';
     StoreModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}
