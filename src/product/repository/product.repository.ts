@@ -28,8 +28,8 @@ export class ProductRepository {
     return true;
   }
 
-  async removeProduct(id: number) {
-    await this.repository.delete(id);
+  async removeProducts(ids: number[]) {
+    await this.repository.delete(ids);
     return true;
   }
 

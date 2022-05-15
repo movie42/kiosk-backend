@@ -22,12 +22,12 @@ export class ProductResolver {
 
   // 소유자 권한 체크 필요
   @Mutation(() => Boolean)
-  async editProducts(@Args({ name: 'products', type: () => [EditProductInput] }) args: EditProductInput[]) {
+  async updateProducts(@Args({ name: 'products', type: () => [EditProductInput] }) args: EditProductInput[]) {
     return this.productService.updateProducts(args);
   }
 
   @Mutation(() => Boolean)
-  async deleteProducts(@Args({ name: 'product_keys', type: () => [Number] }) args: number[]) {
+  async removeProducts(@Args({ name: 'product_keys', type: () => [Number] }) args: number[]) {
     return await this.productService.removeProducts(args);
   }
 
@@ -39,14 +39,14 @@ export class ProductResolver {
   }
 
   @Mutation(() => Boolean)
-  async editProductOptions(
+  async updateProductOptions(
     @Args({ name: 'option', type: () => [EditProductOptionInput] }) args: EditProductOptionInput[],
   ) {
     return this.productService.updateOptions(args);
   }
 
   @Mutation(() => Boolean)
-  async deleteProductOptions(@Args({ name: 'option_id', type: () => [Number] }) args: number[]) {
+  async removeProductOptions(@Args({ name: 'option_id', type: () => [Number] }) args: number[]) {
     return this.productService.removeOptions(args);
   }
 }

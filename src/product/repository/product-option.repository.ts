@@ -15,8 +15,8 @@ export class ProductOptionRepository {
     return true;
   }
 
-  async removeOption(optionId: number) {
-    await this.repository.delete(optionId);
+  async removeOptions(optionIds: number[]) {
+    await this.repository.delete(optionIds);
     return true;
   }
 
