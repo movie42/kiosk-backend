@@ -1,23 +1,27 @@
-import { EntityRepository, Repository } from 'typeorm';
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 import { Option } from '../entity/option.entity';
 import { IAddOption } from '../interface/add-option.interface';
 import { IEditOption } from '../interface/edit-option.interface';
 
-@EntityRepository(Option)
-export class ProductOptionRepository extends Repository<Option> {
+@Injectable()
+export class ProductOptionRepository {
+  constructor(@InjectRepository(Option) private repository: Repository<Option>) {}
+
   async addOption(option: IAddOption) {
-    await this.save(option);
+    await this.repository.save(option);
     return true;
   }
 
   async removeOption(optionId: number) {
-    await this.delete(optionId);
+    await this.repository.delete(optionId);
     return true;
   }
 
   async updateOption(option: IEditOption) {
-    await this.update(option.id, option);
+    await this.repository.update(option.id, option);
     return true;
   }
 }
