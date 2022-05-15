@@ -20,8 +20,8 @@ export class ProductOptionRepository {
     return true;
   }
 
-  async updateOption(option: IEditOption) {
-    await this.repository.update(option.id, option);
+  async updateOption(optionId: number, option: IEditOption) {
+    await this.repository.update(optionId, option);
     return true;
   }
 }

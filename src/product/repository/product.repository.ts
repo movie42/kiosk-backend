@@ -14,13 +14,13 @@ export class ProductRepository {
   }
 
   async existsStoreProductByName(storeId: number, name: string) {
-    const cnt = await this.repository.count({ where: { storeId: storeId, name: name } });
-    return cnt > 0;
+    const count = await this.repository.count({ where: { storeId: storeId, name: name } });
+    return count > 0;
   }
 
   async existsProductById(id: number) {
-    const cnt = await this.repository.count({ where: { id: id } });
-    return cnt > 0;
+    const count = await this.repository.count({ where: { id: id } });
+    return count > 0;
   }
 
   async addProduct(product: IAddProduct) {
@@ -33,8 +33,8 @@ export class ProductRepository {
     return true;
   }
 
-  async updateProduct(product: IEditProduct) {
-    await this.repository.update(product.id, product);
+  async updateProduct(productId: number, product: IEditProduct) {
+    await this.repository.update(productId, product);
     return true;
   }
 }

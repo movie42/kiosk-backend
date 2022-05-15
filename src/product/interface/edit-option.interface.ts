@@ -1,4 +1,3 @@
 export interface IEditOption {
-  id: number;
-  name?: string;
+  name: string;
 }

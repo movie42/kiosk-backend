@@ -5,7 +5,7 @@ import { IsInt, IsOptional, IsString } from 'class-validator';
 export class EditProductInput {
   @IsInt()
   @Field(() => Int)
-  id: number;
+  productId: number;
 
   @IsOptional()
   @IsString()

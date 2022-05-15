@@ -34,10 +34,8 @@ export class ProductService {
     return await this.productRepository.removeProducts(productIds);
   }
 
-  async updateProducts(products: IEditProduct[]) {
-    for (const product of products) {
-      await this.productRepository.updateProduct(product);
-    }
+  async updateProduct(productId: number, product: IEditProduct) {
+    await this.productRepository.updateProduct(productId, product);
     return true;
   }
 
@@ -53,10 +51,8 @@ export class ProductService {
     return true;
   }
 
-  async updateOptions(options: IEditOption[]) {
-    for (const option of options) {
-      await this.productOptionRepository.updateOption(option);
-    }
+  async updateOption(optionId: number, option: IEditOption) {
+    await this.productOptionRepository.updateOption(optionId, option);
     return true;
   }
 
