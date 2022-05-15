@@ -18,10 +18,10 @@ export class AddProductInput {
   @IsOptional()
   @IsString()
   @Field()
-  imageUrl: string;
+  imageUrl?: string;
 
   @IsOptional()
   @IsString()
   @Field()
-  description: string;
+  description?: string;
 }

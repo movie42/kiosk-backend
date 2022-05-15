@@ -1,5 +1,5 @@
 import { Field, InputType, Int } from '@nestjs/graphql';
-import { IsString, IsOptional, IsInt } from 'class-validator';
+import { IsString, IsInt } from 'class-validator';
 
 @InputType()
 export class EditProductOptionInput {
@@ -7,7 +7,6 @@ export class EditProductOptionInput {
   @Field(() => Int)
   optionId: number;
 
-  @IsOptional()
   @IsString()
   @Field()
   name: string;
