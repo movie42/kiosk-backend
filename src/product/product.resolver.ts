@@ -22,7 +22,7 @@ export class ProductResolver {
 
   // 소유자 권한 체크 필요
   @Mutation(() => Boolean)
-  async updateProducts(@Args({ name: 'products', type: () => [EditProductInput] }) arg: EditProductInput) {
+  async updateProduct(@Args({ name: 'products', type: () => EditProductInput }) arg: EditProductInput) {
     return this.productService.updateProduct(arg.productId, {
       name: arg.name,
       price: arg.price,
@@ -45,7 +45,7 @@ export class ProductResolver {
 
   @Mutation(() => Boolean)
   async updateProductOption(@Args({ name: 'option', type: () => EditProductOptionInput }) arg: EditProductOptionInput) {
-    return this.productService.updateOption(arg.id, { name: arg.name });
+    return this.productService.updateOption(arg.optionId, { name: arg.name });
   }
 
   @Mutation(() => Boolean)
