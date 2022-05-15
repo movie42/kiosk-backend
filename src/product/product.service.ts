@@ -14,6 +14,10 @@ export class ProductService {
     private readonly productOptionRepository: ProductOptionRepository,
   ) {}
 
+  async getStoreProductsByStoreId(storeId: number) {
+    return this.productRepository.getStoreProductsByStoreId(storeId);
+  }
+
   async addProducts(products: IAddProduct[]) {
     for (const product of products) {
       const isExistNameOnStore = await this.productRepository.existsStoreProductByName(product.storeId, product.name);

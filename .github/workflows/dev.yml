@@ -1,20 +1,17 @@
 name: WEB
 
 on:
-  pull_request:
-    types: [closed]
-    branches: [main]
+  push:
+    branches: [dev]
 
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: github.event.pull_request.merged
 
     steps:
       - uses: actions/checkout@v3
-
       - name: executing remote ssh commands using password
         if: github.event_name == 'pull_request'
         uses: appleboy/ssh-action@v0.1.4
@@ -24,7 +21,8 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           script: |
-            cd ${{ secrets.WEB_PATH }} && git pull
+            cd /root/kiosk-backend-dev
+            git checkout dev
+            git pull origin dev
             yarn
             yarn build
-            pm2 reload main

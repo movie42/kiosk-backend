@@ -9,6 +9,10 @@ import { IEditProduct } from '../interface/edit-product.interface';
 @Injectable()
 export class ProductRepository {
   constructor(@InjectRepository(Product) private repository: Repository<Product>) {}
+  async getStoreProductsByStoreId(storeId: number) {
+    return this.repository.findBy({ storeId });
+  }
+
   async existsStoreProductByName(storeId: number, name: string) {
     const count = await this.repository.count({ where: { storeId: storeId, name: name } });
     return count > 0;

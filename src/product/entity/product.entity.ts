@@ -1,5 +1,5 @@
 import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 import { Store } from '../../store/entity/store.entity';
 import { Option } from './option.entity';
@@ -36,7 +36,6 @@ export class Product {
   createdAt: Date;
 
   @ManyToOne(() => Store, (entity) => entity.products, { createForeignKeyConstraints: false })
-  @JoinColumn({ name: 'storeId' })
   store: Store;
 
   @Field(() => [Option])
