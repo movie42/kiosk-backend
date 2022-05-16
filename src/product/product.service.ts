@@ -32,7 +32,7 @@ export class ProductService {
 
   async addOptions(options: IAddOption[]) {
     const productIds = options.map((v) => v.productId);
-    const isExistIds = this.productRepository.existProductByIds(productIds);
+    const isExistIds = await this.productRepository.existProductByIds(productIds);
     if (!isExistIds) {
       return false;
     }
