@@ -4,6 +4,8 @@ import { AddProductOptionInput } from './dto/add-product-option.input';
 import { AddProductInput } from './dto/add-product.input';
 import { EditProductOptionInput } from './dto/edit-product-option.input';
 import { EditProductInput } from './dto/edit-product.input';
+import { removeProductOptionInput } from './dto/remove-product-option.input';
+import { removeProductInput } from './dto/remove-product.input';
 import { Product } from './entity/product.entity';
 import { ProductService } from './product.service';
 
@@ -23,17 +25,12 @@ export class ProductResolver {
   // 소유자 권한 체크 필요
   @Mutation(() => Boolean)
   async updateProduct(@Args({ name: 'products', type: () => EditProductInput }) arg: EditProductInput) {
-    return this.productService.updateProduct(arg.productId, {
-      name: arg.name,
-      price: arg.price,
-      imageUrl: arg.imageUrl,
-      description: arg.description,
-    });
+    return this.productService.updateProduct(arg.productId, arg);
   }
 
   @Mutation(() => Boolean)
-  async removeProducts(@Args({ name: 'product_keys', type: () => [Number] }) args: number[]) {
-    return await this.productService.removeProducts(args);
+  async removeProducts(@Args({ name: 'productIds', type: () => removeProductInput }) args: removeProductInput) {
+    return await this.productService.removeProducts(args.productIds);
   }
 
   @Mutation(() => Boolean)
@@ -45,11 +42,13 @@ export class ProductResolver {
 
   @Mutation(() => Boolean)
   async updateProductOption(@Args({ name: 'option', type: () => EditProductOptionInput }) arg: EditProductOptionInput) {
-    return this.productService.updateOption(arg.optionId, { name: arg.name });
+    return this.productService.updateOption(arg.optionId, arg);
   }
 
   @Mutation(() => Boolean)
-  async removeProductOptions(@Args({ name: 'option_id', type: () => [Number] }) args: number[]) {
-    return this.productService.removeOptions(args);
+  async removeProductOptions(
+    @Args({ name: 'optionIds', type: () => removeProductOptionInput }) args: removeProductOptionInput,
+  ) {
+    return this.productService.removeOptions(args.OptionIds);
   }
 }

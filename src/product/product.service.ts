@@ -24,7 +24,7 @@ export class ProductService {
   }
 
   async removeProducts(productIds: number[]) {
-    return await this.productRepository.removeProducts(productIds);
+    return this.productRepository.removeProducts(productIds);
   }
 
   async updateProduct(productId: number, product: IEditProduct) {
@@ -35,11 +35,11 @@ export class ProductService {
   async addOptions(options: IAddOption[]) {
     const productIds = options.map((v) => v.productId);
     const isExistIds = await this.productRepository.existProductByIds(productIds);
-    if (isExistIds) {
-      return await this.productOptionRepository.addOptions(options);
-    } else {
+    if (!isExistIds) {
       return false;
     }
+
+    return await this.productOptionRepository.addOptions(options);
   }
 
   async updateOption(optionId: number, option: IEditOption) {
