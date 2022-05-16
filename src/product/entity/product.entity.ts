@@ -1,5 +1,5 @@
 import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
-import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, Unique } from 'typeorm';
 
 import { Store } from '../../store/entity/store.entity';
 import { Option } from './option.entity';
@@ -7,6 +7,7 @@ import { OrderProduct } from './order-product.entity';
 
 @ObjectType()
 @Entity()
+@Unique('nameAndStoreId', ['name', 'storeId'])
 export class Product {
   @Field(() => ID)
   @PrimaryGeneratedColumn({ type: 'int', unsigned: true })

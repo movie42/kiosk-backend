@@ -10,8 +10,8 @@ import { IEditOption } from '../interface/edit-option.interface';
 export class ProductOptionRepository {
   constructor(@InjectRepository(Option) private repository: Repository<Option>) {}
 
-  async addOption(option: IAddOption) {
-    await this.repository.save(option);
+  async addOptions(options: IAddOption[]) {
+    await this.repository.save(this.repository.create(options));
     return true;
   }
 

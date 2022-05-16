@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 
 import { Product } from '../entity/product.entity';
 import { IAddProduct } from '../interface/add-product.interface';
@@ -13,18 +13,13 @@ export class ProductRepository {
     return this.repository.findBy({ storeId });
   }
 
-  async existsStoreProductByName(storeId: number, name: string) {
-    const count = await this.repository.count({ where: { storeId: storeId, name: name } });
-    return count > 0;
+  async existProductByIds(ids: number[]) {
+    const count = await this.repository.count({ where: { id: In(ids) } });
+    return count == ids.length;
   }
 
-  async existsProductById(id: number) {
-    const count = await this.repository.count({ where: { id: id } });
-    return count > 0;
-  }
-
-  async addProduct(product: IAddProduct) {
-    await this.repository.save(this.repository.create(product));
+  async addProducts(products: IAddProduct[]) {
+    await this.repository.save(this.repository.create(this.repository.create(products)));
     return true;
   }
 

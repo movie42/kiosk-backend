@@ -19,14 +19,7 @@ export class ProductService {
   }
 
   async addProducts(products: IAddProduct[]) {
-    for (const product of products) {
-      const isExistNameOnStore = await this.productRepository.existsStoreProductByName(product.storeId, product.name);
-      if (!isExistNameOnStore) {
-        await this.productRepository.addProduct(product);
-      } else {
-        return false;
-      }
-    }
+    await this.productRepository.addProducts(products);
     return true;
   }
 
@@ -40,15 +33,13 @@ export class ProductService {
   }
 
   async addOptions(options: IAddOption[]) {
-    for (const option of options) {
-      const isExistId = await this.productRepository.existsProductById(option.productId);
-      if (isExistId) {
-        await this.productOptionRepository.addOption(option);
-      } else {
-        return false;
-      }
+    const productIds = options.map((v) => v.productId);
+    const isExistIds = await this.productRepository.existProductByIds(productIds);
+    if (isExistIds) {
+      return await this.productOptionRepository.addOptions(options);
+    } else {
+      return false;
     }
-    return true;
   }
 
   async updateOption(optionId: number, option: IEditOption) {
