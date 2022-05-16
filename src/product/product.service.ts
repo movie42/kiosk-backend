@@ -19,8 +19,7 @@ export class ProductService {
   }
 
   async addProducts(products: IAddProduct[]) {
-    this.productRepository.addProducts(products);
-    return true;
+    return this.productRepository.addProducts(products);
   }
 
   async removeProducts(productIds: number[]) {
