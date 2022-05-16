@@ -15,11 +15,11 @@ export class ProductRepository {
 
   async existProductByIds(ids: number[]) {
     const count = await this.repository.count({ where: { id: In(ids) } });
-    return count == ids.length;
+    return count === ids.length;
   }
 
   async addProducts(products: IAddProduct[]) {
-    await this.repository.save(this.repository.create(this.repository.create(products)));
+    await this.repository.save(this.repository.create(products));
     return true;
   }
 
