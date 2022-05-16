@@ -19,7 +19,7 @@ export class ProductService {
   }
 
   async addProducts(products: IAddProduct[]) {
-    await this.productRepository.addProducts(products);
+    this.productRepository.addProducts(products);
     return true;
   }
 
@@ -34,20 +34,19 @@ export class ProductService {
 
   async addOptions(options: IAddOption[]) {
     const productIds = options.map((v) => v.productId);
-    const isExistIds = await this.productRepository.existProductByIds(productIds);
+    const isExistIds = this.productRepository.existProductByIds(productIds);
     if (!isExistIds) {
       return false;
     }
 
-    return await this.productOptionRepository.addOptions(options);
+    return this.productOptionRepository.addOptions(options);
   }
 
   async updateOption(optionId: number, option: IEditOption) {
-    await this.productOptionRepository.updateOption(optionId, option);
-    return true;
+    return this.productOptionRepository.updateOption(optionId, option);
   }
 
   async removeOptions(optionIds: number[]) {
-    return await this.productOptionRepository.removeOptions(optionIds);
+    return this.productOptionRepository.removeOptions(optionIds);
   }
 }
