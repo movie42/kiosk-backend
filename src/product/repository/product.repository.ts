@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
 
@@ -19,7 +19,12 @@ export class ProductRepository {
   }
 
   async addProducts(products: IAddProduct[]) {
-    await this.repository.save(this.repository.create(products));
+    try {
+      await this.repository.save(this.repository.create(products));
+    } catch (e) {
+      Logger.error(e);
+      return false;
+    }
     return true;
   }
 
