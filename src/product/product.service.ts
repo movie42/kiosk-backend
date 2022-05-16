@@ -28,8 +28,7 @@ export class ProductService {
   }
 
   async updateProduct(productId: number, product: IEditProduct) {
-    await this.productRepository.updateProduct(productId, product);
-    return true;
+    return this.productRepository.updateProduct(productId, product);
   }
 
   async addOptions(options: IAddOption[]) {
