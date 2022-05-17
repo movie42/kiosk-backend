@@ -10,6 +10,7 @@ import {
 } from 'typeorm-transactional-cls-hooked';
 
 import { AppModule } from './app.module';
+import { isProd } from './common/constant';
 import { JwtAuthGuard } from './common/guard';
 
 dayjs.extend(utc);
@@ -22,7 +23,7 @@ async function bootstrap() {
   app.enable('trust proxy', true);
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
   app.useGlobalGuards(new JwtAuthGuard(new Reflector()));
-  await app.listen(config.get('port'));
+  await app.listen(isProd ? config.get('productionPort') : config.get('port'));
 }
 
 bootstrap();
