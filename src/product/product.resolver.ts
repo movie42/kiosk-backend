@@ -9,6 +9,7 @@ import { removeProductInput } from './dto/remove-product.input';
 import { Product } from './entity/product.entity';
 import { ProductService } from './product.service';
 
+// TODO: Store에 대한 소유자 권한 체크 필요(Mutation들)
 @Resolver()
 export class ProductResolver {
   constructor(private readonly productService: ProductService) {}
@@ -22,7 +23,6 @@ export class ProductResolver {
     return this.productService.addProducts(args);
   }
 
-  // 소유자 권한 체크 필요
   @Mutation(() => Boolean)
   async updateProduct(@Args({ name: 'products', type: () => EditProductInput }) arg: EditProductInput) {
     return this.productService.updateProduct(arg.productId, arg);
