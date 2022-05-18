@@ -14,7 +14,7 @@ export class EditProductInput {
 
   @IsOptional()
   @IsInt()
-  @Field({ nullable: true })
+  @Field(() => Int, { nullable: true })
   price?: number;
 
   @IsOptional()

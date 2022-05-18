@@ -17,11 +17,11 @@ export class AddProductInput {
 
   @IsOptional()
   @IsString()
-  @Field()
+  @Field({ nullable: true })
   imageUrl?: string;
 
   @IsOptional()
   @IsString()
-  @Field()
+  @Field({ nullable: true })
   description?: string;
 }

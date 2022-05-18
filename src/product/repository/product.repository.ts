@@ -19,10 +19,11 @@ export class ProductRepository {
   }
 
   async addProducts(products: IAddProduct[]) {
+    const log: Logger = new Logger();
     try {
       await this.repository.save(this.repository.create(products));
     } catch (e) {
-      Logger.error(e);
+      log.error(e);
       return false;
     }
     return true;
