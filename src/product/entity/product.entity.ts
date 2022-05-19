@@ -22,12 +22,12 @@ export class Product {
   price: number;
 
   @Field()
-  @Column('varchar', { length: 255 })
-  imageUrl: string;
+  @Column('varchar', { length: 255, nullable: true })
+  imageUrl?: string;
 
   @Field()
-  @Column('varchar', { length: 255 })
-  description: string;
+  @Column('varchar', { length: 255, nullable: true })
+  description?: string;
 
   @Field(() => Int)
   @Column({ type: 'int' })
