@@ -13,7 +13,7 @@ export class Product {
   @PrimaryGeneratedColumn({ type: 'int', unsigned: true })
   id: number;
 
-  @Field({ nullable: true })
+  @Field()
   @Column('varchar', { length: 255 })
   name: string;
 
