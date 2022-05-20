@@ -1,4 +1,4 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
 
 import { AddProductOptionInput } from './dto/add-product-option.input';
 import { AddProductInput } from './dto/add-product.input';
@@ -10,7 +10,7 @@ import { Product } from './entity/product.entity';
 import { ProductService } from './product.service';
 
 // TODO: Store에 대한 소유자 권한 체크 필요(Mutation들)
-@Resolver()
+@Resolver(() => Product)
 export class ProductResolver {
   constructor(private readonly productService: ProductService) {}
   @Query(() => [Product])
@@ -50,5 +50,10 @@ export class ProductResolver {
     @Args({ name: 'optionIds', type: () => removeProductOptionInput }) args: removeProductOptionInput,
   ) {
     return this.productService.removeOptions(args.OptionIds);
+  }
+
+  @ResolveField(() => [Option])
+  async options(@Parent() product: Product) {
+    return this.productService.getOptionsByLoader(product.id);
   }
 }
