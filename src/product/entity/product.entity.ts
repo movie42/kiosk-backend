@@ -13,7 +13,7 @@ export class Product {
   @PrimaryGeneratedColumn({ type: 'int', unsigned: true })
   id: number;
 
-  @Field()
+  @Field({ nullable: true })
   @Column('varchar', { length: 255 })
   name: string;
 
@@ -21,11 +21,11 @@ export class Product {
   @Column({ type: 'int' })
   price: number;
 
-  @Field()
+  @Field({ nullable: true })
   @Column('varchar', { length: 255, nullable: true })
   imageUrl?: string;
 
-  @Field()
+  @Field({ nullable: true })
   @Column('varchar', { length: 255, nullable: true })
   description?: string;
 

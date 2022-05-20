@@ -8,7 +8,10 @@ import { IEditProduct } from '../interface/edit-product.interface';
 
 @Injectable()
 export class ProductRepository {
+  private readonly logger = new Logger(ProductRepository.name);
+
   constructor(@InjectRepository(Product) private repository: Repository<Product>) {}
+
   async getStoreProductsByStoreId(storeId: number) {
     return this.repository.findBy({ storeId });
   }
@@ -19,11 +22,10 @@ export class ProductRepository {
   }
 
   async addProducts(products: IAddProduct[]) {
-    const log: Logger = new Logger();
     try {
       await this.repository.save(this.repository.create(products));
     } catch (e) {
-      log.error(e);
+      this.logger.error(e);
       return false;
     }
     return true;
