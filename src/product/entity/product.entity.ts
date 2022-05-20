@@ -1,5 +1,5 @@
 import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
-import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, Unique } from 'typeorm';
 
 import { Store } from '../../store/entity/store.entity';
 import { Option } from './option.entity';
@@ -7,12 +7,13 @@ import { OrderProduct } from './order-product.entity';
 
 @ObjectType()
 @Entity()
+@Unique('nameAndStoreId', ['name', 'storeId'])
 export class Product {
   @Field(() => ID)
   @PrimaryGeneratedColumn({ type: 'int', unsigned: true })
   id: number;
 
-  @Field()
+  @Field({ nullable: true })
   @Column('varchar', { length: 255 })
   name: string;
 
@@ -20,13 +21,13 @@ export class Product {
   @Column({ type: 'int' })
   price: number;
 
-  @Field()
-  @Column('varchar', { length: 255 })
-  imageUrl: string;
+  @Field({ nullable: true })
+  @Column('varchar', { length: 255, nullable: true })
+  imageUrl?: string;
 
-  @Field()
-  @Column('varchar', { length: 255 })
-  description: string;
+  @Field({ nullable: true })
+  @Column('varchar', { length: 255, nullable: true })
+  description?: string;
 
   @Field(() => Int)
   @Column({ type: 'int' })
@@ -38,6 +39,7 @@ export class Product {
   @ManyToOne(() => Store, (entity) => entity.products, { createForeignKeyConstraints: false })
   store: Store;
 
+  @Field(() => [Option])
   @OneToMany(() => Option, (item) => item.product)
   options: Option[];
 
