@@ -2,7 +2,6 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
 import { readFileSync } from 'fs';
 
 import { AppController } from './app.controller';
@@ -22,8 +21,7 @@ import { UserModule } from './user/user.module';
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       debug: !isProd,
-      playground: false,
-      plugins: [ApolloServerPluginLandingPageLocalDefault()],
+      playground: !isProd,
       autoSchemaFile: true,
       context: ({ req }) => ({ req }),
     }),
