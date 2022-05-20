@@ -1,4 +1,4 @@
-import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Parent, ResolveField, Resolver } from '@nestjs/graphql';
 
 import { AddProductOptionInput } from './dto/add-product-option.input';
 import { AddProductInput } from './dto/add-product.input';
@@ -45,5 +45,10 @@ export class ProductResolver {
     @Args({ name: 'optionIds', type: () => removeProductOptionInput }) args: removeProductOptionInput,
   ) {
     return this.productService.removeOptions(args.OptionIds);
+  }
+
+  @ResolveField(() => [Option])
+  async options(@Parent() product: Product) {
+    return this.productService.getOptionsByLoader(product.id);
   }
 }

@@ -18,6 +18,10 @@ export class ProductService {
     return this.productRepository.getProductsByLoader(storeId);
   }
 
+  async getOptionsByLoader(productId: number) {
+    return this.productOptionRepository.getOptionsByLoader(productId);
+  }
+
   async getStoreProductsByStoreId(storeId: number) {
     return this.productRepository.getProductsByLoader(storeId);
   }
