@@ -1,12 +1,14 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
 
+import { Product } from '../product/entity/product.entity';
+import { ProductService } from '../product/product.service';
 import { AddStoreInput } from './dto/add-store.input';
 import { Store } from './entity/store.entity';
 import { StoreService } from './store.service';
 
-@Resolver()
+@Resolver(() => Store)
 export class StoreResolver {
-  constructor(private readonly storeService: StoreService) {}
+  constructor(private readonly storeService: StoreService, private readonly productService: ProductService) {}
 
   @Query(() => [Store], { nullable: 'items' })
   async stores() {
@@ -29,5 +31,10 @@ export class StoreResolver {
   @Mutation(() => Boolean)
   async removeStore(@Args('id') id: number) {
     return this.storeService.removeStore(id);
+  }
+
+  @ResolveField(() => [Product])
+  async products(@Parent() store: Store) {
+    return this.productService.getProductsByLoader(store.id);
   }
 }

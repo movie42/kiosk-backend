@@ -1,5 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import * as DataLoader from 'dataloader';
 import { In, Repository } from 'typeorm';
 
 import { Product } from '../entity/product.entity';
@@ -9,11 +10,22 @@ import { IEditProduct } from '../interface/edit-product.interface';
 @Injectable()
 export class ProductRepository {
   private readonly logger = new Logger(ProductRepository.name);
+  private productsLoader = new DataLoader<number, Product[] | undefined>(
+    async (storeIds: number[]) => {
+      const products = await this.getProductsByStoreIds(storeIds);
+      return storeIds.map((storeId) => products.filter((products) => products.storeId === storeId));
+    },
+    { cache: false },
+  );
 
   constructor(@InjectRepository(Product) private repository: Repository<Product>) {}
 
-  async getStoreProductsByStoreId(storeId: number) {
-    return this.repository.findBy({ storeId });
+  async getProductsByLoader(storeId: number) {
+    return this.productsLoader.load(storeId);
+  }
+
+  async getProductsByStoreIds(storeIds: number[]) {
+    return this.repository.findBy({ storeId: In(storeIds) });
   }
 
   async existProductByIds(ids: number[]) {
