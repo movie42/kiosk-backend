@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
 import { IPagination } from '../common/interface/pagination';
+import { IStore } from './interface/store-id.interface';
 import { OrderProductRepository } from './repository/order-product.repository';
 import { OrderRepository } from './repository/order.repository';
 
@@ -15,7 +16,7 @@ export class OrderService {
     return this.orderProductRepository.getOrderProductsByLoader(orderId);
   }
 
-  async getOrders(pagination: IPagination) {
-    return this.orderRepository.getOrders(pagination);
+  async getOrders(args: IStore, pagination: IPagination) {
+    return this.orderRepository.getOrders(args, pagination);
   }
 }
