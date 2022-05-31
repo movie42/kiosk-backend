@@ -40,7 +40,7 @@ export class Product {
   store: Store;
 
   @Field(() => [Option])
-  @OneToMany(() => Option, (item) => item.product)
+  @OneToMany(() => Option, (item) => item.product, { cascade: ['insert', 'update'] })
   options: Option[];
 
   @OneToMany(() => OrderProduct, (item) => item.product)

@@ -1,5 +1,8 @@
 import { Field, InputType, Int } from '@nestjs/graphql';
-import { IsString, IsInt, IsOptional } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsString, IsInt, IsOptional, IsArray, ArrayNotEmpty, ArrayUnique, ValidateNested } from 'class-validator';
+
+import { AddOptionCascade } from './add-option-cascade.input';
 
 @InputType()
 export class AddProductInput {
@@ -24,4 +27,13 @@ export class AddProductInput {
   @IsString()
   @Field({ nullable: true })
   description?: string;
+
+  @IsOptional()
+  @IsArray()
+  @ArrayNotEmpty()
+  @ValidateNested({ each: true })
+  @Type(() => AddOptionCascade)
+  @ArrayUnique()
+  @Field(() => [AddOptionCascade], { nullable: true })
+  options?: AddOptionCascade[];
 }
