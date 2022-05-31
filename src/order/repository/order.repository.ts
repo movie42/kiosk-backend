@@ -9,6 +9,10 @@ export class OrderRepository {
   constructor(@InjectRepository(Order) private repository: Repository<Order>) {}
 
   async getOrders() {
-    return this.repository.find();
+    return this.repository.find({
+      order: {
+        id: 'DESC',
+      },
+    });
   }
 }
