@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { IAddOption } from './interface/add-option.interface';
+import { AddProductOptionInput } from './dto/add-product-option.input';
 import { IAddProduct } from './interface/add-product.interface';
 import { IEditOption } from './interface/edit-option.interface';
 import { IEditProduct } from './interface/edit-product.interface';
@@ -30,8 +30,19 @@ export class ProductService {
     return this.productRepository.updateProduct(productId, product);
   }
 
-  async addOptions(options: IAddOption[]) {
-    const productIds = options.map((v) => v.productId);
+  async addOptions(optionsDto: AddProductOptionInput[]) {
+    let options = [];
+    optionsDto.forEach((option) => {
+      options = options.concat(
+        option.names.map((name) => {
+          return {
+            productId: option.productId,
+            name: name,
+          };
+        }),
+      );
+    });
+    const productIds = optionsDto.map((v) => v.productId);
     const isExistIds = await this.productRepository.existProductByIds(productIds);
     if (!isExistIds) {
       return false;

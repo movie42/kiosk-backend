@@ -3,14 +3,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { Option } from '../entity/option.entity';
-import { IAddOption } from '../interface/add-option.interface';
+import { IAddOptionFrag } from '../interface/add-options-frag.interface';
 import { IEditOption } from '../interface/edit-option.interface';
 
 @Injectable()
 export class ProductOptionRepository {
   constructor(@InjectRepository(Option) private repository: Repository<Option>) {}
 
-  async addOptions(options: IAddOption[]) {
+  async addOptions(options: IAddOptionFrag[]) {
     await this.repository.save(this.repository.create(options));
     return true;
   }
