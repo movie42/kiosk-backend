@@ -1,4 +1,4 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Resolver } from '@nestjs/graphql';
 
 import { RequestInfo } from '../common/decorator';
 import { IRequest } from '../common/interface/request';
@@ -12,7 +12,7 @@ import { TokenOutput } from './dto/token.output';
 export class AuthResolver {
   constructor(private readonly authService: AuthService, private readonly userService: UserService) {}
 
-  @Query(() => TokenOutput)
+  @Mutation(() => TokenOutput)
   async login(@Args() args: LoginArgs) {
     return this.authService.login(args.email, args.password);
   }
