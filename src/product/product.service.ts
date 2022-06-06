@@ -18,6 +18,10 @@ export class ProductService {
     return this.productRepository.getProductsByLoader(storeId);
   }
 
+  async getStoreProductsByStoreId(storeId: number) {
+    return this.productRepository.getProductsByLoader(storeId);
+  }
+
   async addProducts(products: IAddProduct[]) {
     return this.productRepository.addProducts(products);
   }
