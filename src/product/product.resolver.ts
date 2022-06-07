@@ -48,6 +48,6 @@ export class ProductResolver {
 
   @ResolveField(() => String)
   async test() {
-    return 'test';
+    return 'test test';
   }
 }
