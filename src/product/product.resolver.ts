@@ -6,10 +6,11 @@ import { EditProductOptionInput } from './dto/edit-product-option.input';
 import { EditProductInput } from './dto/edit-product.input';
 import { removeProductOptionInput } from './dto/remove-product-option.input';
 import { removeProductInput } from './dto/remove-product.input';
+import { Product } from './entity/product.entity';
 import { ProductService } from './product.service';
 
 // TODO: Store에 대한 소유자 권한 체크 필요(Mutation들)
-@Resolver()
+@Resolver(() => Product)
 export class ProductResolver {
   constructor(private readonly productService: ProductService) {}
   @Mutation(() => Boolean)
