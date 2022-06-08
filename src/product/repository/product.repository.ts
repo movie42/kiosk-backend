@@ -30,7 +30,10 @@ export class ProductRepository {
 
   async existProductByIds(ids: number[]) {
     const count = await this.repository.count({ where: { id: In(ids) } });
-    return count === ids.length;
+    const uniqueIds = ids.filter((e, i) => {
+      return ids.indexOf(e) === i;
+    });
+    return count === uniqueIds.length;
   }
 
   async addProducts(products: IAddProduct[]) {
