@@ -14,8 +14,12 @@ export class ProductService {
     private readonly productOptionRepository: ProductOptionRepository,
   ) {}
 
-  async getProductsByLoader(storeId: number) {
+  async getProductsByStoreId(storeId: number) {
     return this.productRepository.getProductsByLoader(storeId);
+  }
+
+  async getOptionsByProductId(productId: number) {
+    return this.productOptionRepository.getOptionsByLoader(productId);
   }
 
   async getStoreProductsByStoreId(storeId: number) {
