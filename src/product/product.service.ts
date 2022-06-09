@@ -14,11 +14,11 @@ export class ProductService {
     private readonly productOptionRepository: ProductOptionRepository,
   ) {}
 
-  async getProductsByLoader(storeId: number) {
+  async getProductsByStoreId(storeId: number) {
     return this.productRepository.getProductsByLoader(storeId);
   }
 
-  async getOptionsByLoader(productId: number) {
+  async getOptionsByProductId(productId: number) {
     return this.productOptionRepository.getOptionsByLoader(productId);
   }
 
