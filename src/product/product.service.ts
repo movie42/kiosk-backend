@@ -34,9 +34,14 @@ export class ProductService {
     return this.productRepository.updateProduct(productId, product);
   }
 
+  async existProductByIds(productIds: number[]) {
+    const uniqueIds = productIds.filter((e, i) => productIds.indexOf(e) === i);
+    return this.productRepository.existProductByUniqueIds(uniqueIds);
+  }
+
   async addOptions(options: IAddOption[]) {
     const productIds = options.map((v) => v.productId);
-    const isExistIds = await this.productRepository.existProductByIds(productIds);
+    const isExistIds = await this.existProductByIds(productIds);
     if (!isExistIds) {
       return false;
     }
