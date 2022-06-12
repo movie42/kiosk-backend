@@ -28,7 +28,7 @@ export class ProductRepository {
     return this.repository.findBy({ storeId: In(storeIds) });
   }
 
-  async existProductByIds(ids: number[]) {
+  async existProductByUniqueIds(ids: number[]) {
     const count = await this.repository.count({ where: { id: In(ids) } });
     return count === ids.length;
   }
