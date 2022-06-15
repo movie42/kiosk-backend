@@ -49,6 +49,6 @@ export class ProductResolver {
 
   @ResolveField(() => [Option])
   async options(@Parent() product: Product) {
-    return this.productService.getOptionsByLoader(product.id);
+    return this.productService.getOptionsByProductId(product.id);
   }
 }

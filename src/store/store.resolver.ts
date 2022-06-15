@@ -35,6 +35,6 @@ export class StoreResolver {
 
   @ResolveField(() => [Product])
   async products(@Parent() store: Store) {
-    return this.productService.getProductsByLoader(store.id);
+    return this.productService.getProductsByStoreId(store.id);
   }
 }
