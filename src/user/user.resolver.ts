@@ -12,6 +12,7 @@ import { UserService } from './user.service';
 export class UserResolver {
   constructor(private readonly userService: UserService) {}
 
+  @Roles(Role.ADMIN)
   @Query(() => User)
   async me(@RequestInfo() req: Required<IRequest>) {
     return this.userService.getUserById(req.user.id);
