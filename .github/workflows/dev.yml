@@ -27,3 +27,4 @@ jobs:
             git pull origin dev
             yarn
             yarn build
+            pm2 reload all
