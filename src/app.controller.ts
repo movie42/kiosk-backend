@@ -6,6 +6,6 @@ import { isDev, isProd } from './common/constant';
 export class AppController {
   @Get('health')
   health(): string {
-    return isProd ? 'prod ok' : isDev ? 'dev ok' : 'ok';
+    return isProd ? 'prod ok1' : isDev ? 'dev ok2' : 'ok3';
   }
 }
