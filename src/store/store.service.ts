@@ -15,6 +15,11 @@ export class StoreService {
     return this.storeRepository.getStoreById(id);
   }
 
+  async getIsStoreAvailable(id: number) {
+    const store = await this.storeRepository.getStoreById(id);
+    return store.isAvailable;
+  }
+
   async addStore(args: IAddStore) {
     return this.storeRepository.addStore(args);
   }

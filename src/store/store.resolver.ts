@@ -20,6 +20,11 @@ export class StoreResolver {
     return this.storeService.getStoreById(id);
   }
 
+  @Query(() => Boolean)
+  async storeIsAvailable(@Args('id') id: number) {
+    return this.storeService.getIsStoreAvailable(id);
+  }
+
   @Mutation(() => Boolean)
   async addStore(@Args('store') args: AddStoreInput) {
     // 임시로 작성
