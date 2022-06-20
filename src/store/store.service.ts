@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
 import { IAddStore } from './interface/add-store.interface';
+import { IUpdateStore } from './interface/update-store.interface';
 import { StoreRepository } from './repository/store.repository';
 
 @Injectable()
@@ -21,6 +22,10 @@ export class StoreService {
 
   async addStore(args: IAddStore) {
     return this.storeRepository.addStore(args);
+  }
+
+  async updateStore(id: number, input: IUpdateStore) {
+    return this.storeRepository.updateStore(id, input);
   }
 
   async removeStore(id: number) {

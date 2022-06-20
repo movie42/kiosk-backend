@@ -5,6 +5,7 @@ import { IRequest } from '../common/interface/request';
 import { Product } from '../product/entity/product.entity';
 import { ProductService } from '../product/product.service';
 import { AddStoreInput } from './dto/add-store.input';
+import { UpdateStoreInput } from './dto/update-store.input';
 import { Store } from './entity/store.entity';
 import { StoreService } from './store.service';
 
@@ -36,6 +37,11 @@ export class StoreResolver {
   @Mutation(() => Boolean)
   async removeStore(@Args('id') id: number) {
     return this.storeService.removeStore(id);
+  }
+
+  @Mutation(() => Boolean)
+  async updateStore(@Args('id') id: number, @Args('store') input: UpdateStoreInput) {
+    return this.storeService.updateStore(id, input);
   }
 
   @ResolveField(() => [Product])
