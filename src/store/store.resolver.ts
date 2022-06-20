@@ -44,6 +44,10 @@ export class StoreResolver {
     return this.storeService.updateStore(id, input);
   }
 
+  async toggleIsAvailable(@Args('id') id: number) {
+    return this.storeService.toggleIsAvailable(id);
+  }
+
   @ResolveField(() => [Product])
   async products(@Parent() store: Store) {
     return this.productService.getProductsByStoreId(store.id);

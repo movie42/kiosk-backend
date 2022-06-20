@@ -36,4 +36,13 @@ export class StoreRepository {
     await this.repository.delete(id);
     return true;
   }
+
+  async toggleIsAvailable(id: number) {
+    await this.repository
+      .createQueryBuilder('store')
+      .update('isAvailable = !isAvailable')
+      .where('id = :id', { id })
+      .execute();
+    return true;
+  }
 }
