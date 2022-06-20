@@ -1,5 +1,7 @@
 import { Args, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
 
+import { RequestInfo } from '../common/decorator';
+import { IRequest } from '../common/interface/request';
 import { Product } from '../product/entity/product.entity';
 import { ProductService } from '../product/product.service';
 import { AddStoreInput } from './dto/add-store.input';
@@ -10,9 +12,14 @@ import { StoreService } from './store.service';
 export class StoreResolver {
   constructor(private readonly storeService: StoreService, private readonly productService: ProductService) {}
 
-  @Query(() => [Store], { nullable: 'items' })
+  @Query(() => [Store])
   async stores() {
     return this.storeService.getStores();
+  }
+
+  @Query(() => [Store])
+  async myStores(@RequestInfo() req: Required<IRequest>) {
+    return this.storeService.getStoresByUserId(req.user.id);
   }
 
   @Query(() => Store, { nullable: true })
@@ -21,10 +28,8 @@ export class StoreResolver {
   }
 
   @Mutation(() => Boolean)
-  async addStore(@Args('store') args: AddStoreInput) {
-    // 임시로 작성
-    // TODO: ownerId는 req.user.id로 불러와야함.
-    return this.storeService.addStore({ ...args, ownerId: 4 });
+  async addStore(@RequestInfo() req: Required<IRequest>, @Args('store') args: AddStoreInput) {
+    return this.storeService.addStore({ ...args, ownerId: req.user.id });
   }
 
   // TODO: 소유자 권한 체크 필요

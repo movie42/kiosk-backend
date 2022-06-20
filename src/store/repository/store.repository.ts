@@ -9,12 +9,16 @@ import { IAddStore } from '../interface/add-store.interface';
 export class StoreRepository {
   constructor(@InjectRepository(Store) private repository: Repository<Store>) {}
 
-  async getStoreById(id: number) {
-    return this.repository.findOneBy({ id });
-  }
-
   async getStores() {
     return this.repository.find();
+  }
+
+  async getStoresByUserId(ownerId: number) {
+    return this.repository.findBy({ ownerId });
+  }
+
+  async getStoreById(id: number) {
+    return this.repository.findOneBy({ id });
   }
 
   async addStore(args: IAddStore) {
