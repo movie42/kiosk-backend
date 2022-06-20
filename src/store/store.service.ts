@@ -22,4 +22,8 @@ export class StoreService {
   async removeStore(id: number) {
     return this.storeRepository.removeStore(id);
   }
+
+  async toggleIsAvailable(id: number) {
+    return this.storeRepository.toggleIsAvailable(id);
+  }
 }
