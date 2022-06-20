@@ -31,6 +31,10 @@ export class Store {
   @Column({ type: 'int' })
   ownerId: number;
 
+  @Field()
+  @Column({ type: 'boolean', default: false })
+  isAvailable: boolean;
+
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 
