@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 
 import { Store } from '../entity/store.entity';
 import { IAddStore } from '../interface/add-store.interface';
+import { IUpdateStore } from '../interface/update-store.interface';
 
 @Injectable()
 export class StoreRepository {
@@ -19,6 +20,11 @@ export class StoreRepository {
 
   async addStore(args: IAddStore) {
     await this.repository.save(this.repository.create(args));
+    return true;
+  }
+
+  async updateStore(id: number, input: IUpdateStore) {
+    await this.repository.update(id, input);
     return true;
   }
 
