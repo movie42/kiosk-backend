@@ -24,7 +24,7 @@ export class Order {
   storeId: number;
 
   @Field(() => OrderStatusType)
-  @Column({ type: 'enum', enum: OrderStatusType })
+  @Column({ type: 'enum', enum: OrderStatusType, default: OrderStatusType.READY })
   status: OrderStatusType;
 
   @CreateDateColumn({ type: 'timestamp' })
