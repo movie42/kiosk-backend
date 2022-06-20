@@ -32,7 +32,7 @@ export class Store {
   ownerId: number;
 
   @Field()
-  @Column({ type: 'boolean' })
+  @Column({ type: 'boolean', default: false })
   isAvailable: boolean;
 
   @CreateDateColumn({ type: 'timestamp' })
