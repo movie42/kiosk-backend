@@ -1,6 +1,7 @@
 import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
+import { OrderStatusType } from '../enum/order-status';
 import { OrderProduct } from './order-product.entity';
 
 @ObjectType()
@@ -21,6 +22,10 @@ export class Order {
   @Field(() => Int)
   @Column({ type: 'int' })
   storeId: number;
+
+  @Field(() => OrderStatusType)
+  @Column({ type: 'enum', enum: OrderStatusType })
+  status: OrderStatusType;
 
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;

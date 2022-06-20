@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 
 import { IPagination } from '../../common/interface/pagination';
 import { Order } from '../entity/order.entity';
+import { IOrderStatus } from '../interface/order-status.interface';
 import { IStore } from '../interface/store-id.interface';
 
 @Injectable()
@@ -21,5 +22,9 @@ export class OrderRepository {
       take: pagination.limit,
       skip: pagination.offset,
     });
+  }
+
+  async updateStatus(id: number, input: IOrderStatus) {
+    return this.repository.update(id, { status: input.status });
   }
 }
