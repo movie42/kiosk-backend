@@ -33,6 +33,11 @@ export class ProductRepository {
     return count === ids.length;
   }
 
+  async isProductAvailable(productId: number) {
+    const product = await this.repository.findOneBy({ id: productId });
+    return product.isAvailable;
+  }
+
   async addProducts(products: IAddProduct[]) {
     try {
       await this.repository.save(this.repository.create(products));
@@ -50,6 +55,15 @@ export class ProductRepository {
 
   async updateProduct(productId: number, product: IEditProduct) {
     await this.repository.update(productId, product);
+    return true;
+  }
+
+  async toggleIsAvailable(id: number) {
+    await this.repository
+      .createQueryBuilder('product')
+      .update('isAvailable = !isAvailable')
+      .where('id = :id', { id })
+      .execute();
     return true;
   }
 }
