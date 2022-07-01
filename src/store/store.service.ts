@@ -12,6 +12,10 @@ export class StoreService {
     return this.storeRepository.getStores();
   }
 
+  async getStoresByUserId(userId: number) {
+    return this.storeRepository.getStoresByUserId(userId);
+  }
+
   async getStoreById(id: number) {
     return this.storeRepository.getStoreById(id);
   }
@@ -26,5 +30,9 @@ export class StoreService {
 
   async removeStore(id: number) {
     return this.storeRepository.removeStore(id);
+  }
+
+  async toggleIsAvailable(id: number) {
+    return this.storeRepository.toggleIsAvailable(id);
   }
 }
