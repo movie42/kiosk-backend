@@ -15,7 +15,7 @@ export class ProductResolver {
   constructor(private readonly productService: ProductService) {}
 
   @Query(() => Boolean)
-  async storeIsAvailable(@Args('id') id: number) {
+  async productIsAvailable(@Args('id') id: number) {
     return this.productService.isProductAvailable(id);
   }
 
@@ -54,7 +54,7 @@ export class ProductResolver {
   }
 
   @Mutation(() => Boolean)
-  async toggleIsAvailable(@Args('id') id: number) {
+  async toggleProductIsAvailable(@Args('id') id: number) {
     return this.productService.toggleIsAvailable(id);
   }
 
