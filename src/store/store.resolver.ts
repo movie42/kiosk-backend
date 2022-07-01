@@ -44,6 +44,7 @@ export class StoreResolver {
     return this.storeService.updateStore(id, input);
   }
 
+  @Mutation(() => Boolean)
   async toggleIsAvailable(@Args('id') id: number) {
     return this.storeService.toggleIsAvailable(id);
   }
