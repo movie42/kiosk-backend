@@ -22,6 +22,6 @@ export class OrderService {
   }
 
   async updateOrderStatus(id: number, input: IOrderStatus) {
-    return this.orderRepository.updateOrderStatus(id, input);
+    return this.orderRepository.updateStatus(id, input);
   }
 }
