@@ -38,9 +38,11 @@ export class StoreRepository {
   }
 
   async toggleIsAvailable(id: number) {
+    const store = await this.repository.findOneBy({ id });
     await this.repository
-      .createQueryBuilder('store')
-      .update('isAvailable = !isAvailable')
+      .createQueryBuilder()
+      .update('store')
+      .set({ isAvailable: !store.isAvailable })
       .where('id = :id', { id })
       .execute();
     return true;
