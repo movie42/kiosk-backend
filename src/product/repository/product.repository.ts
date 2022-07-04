@@ -40,12 +40,11 @@ export class ProductRepository {
 
   async addProducts(products: IAddProduct[]) {
     try {
-      await this.repository.save(this.repository.create(products));
+      return await this.repository.save(this.repository.create(products));
     } catch (e) {
       this.logger.error(e);
-      return false;
+      return [];
     }
-    return true;
   }
 
   async removeProducts(ids: number[]) {

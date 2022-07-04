@@ -25,7 +25,7 @@ export class AuthService {
     }
     const isValidPassword = await bcrypt.compare(password, user.password.replace(/^\$2y\$/, '$2a$'));
     if (!isValidPassword) {
-      throw new BadRequestException({ error: '비밀번호를 확인해주세요.' });
+      throw new BadRequestException('비밀 번호를 확인해주세요');
     }
 
     return this.signJsonWebToken(user.id, Role.ADMIN);

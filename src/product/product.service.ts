@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 
 import { IAddOption } from './interface/add-option.interface';
 import { IAddProduct } from './interface/add-product.interface';
@@ -31,7 +31,11 @@ export class ProductService {
   }
 
   async addProducts(products: IAddProduct[]) {
-    return this.productRepository.addProducts(products);
+    const addedProducts = await this.productRepository.addProducts(products);
+    if (addedProducts.length == 0) {
+      throw new BadRequestException('상품 등록 중 오류가 발생했습니다.');
+    }
+    return addedProducts.map((product) => product.id);
   }
 
   async removeProducts(productIds: number[]) {

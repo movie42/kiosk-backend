@@ -1,4 +1,4 @@
-import { Args, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
+import { Args, Int, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
 
 import { AddProductOptionInput } from './dto/add-product-option.input';
 import { AddProductInput } from './dto/add-product.input';
@@ -19,7 +19,7 @@ export class ProductResolver {
     return this.productService.isProductAvailable(id);
   }
 
-  @Mutation(() => Boolean)
+  @Mutation(() => [Int])
   async addProducts(@Args({ name: 'products', type: () => [AddProductInput] }) args: AddProductInput[]) {
     return this.productService.addProducts(args);
   }
