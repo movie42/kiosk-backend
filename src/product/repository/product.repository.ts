@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as DataLoader from 'dataloader';
 import { In, Repository } from 'typeorm';
@@ -9,7 +9,6 @@ import { IEditProduct } from '../interface/edit-product.interface';
 
 @Injectable()
 export class ProductRepository {
-  private readonly logger = new Logger(ProductRepository.name);
   private productsLoader = new DataLoader<number, Product[] | undefined>(
     async (storeIds: number[]) => {
       const products = await this.getProductsByStoreIds(storeIds);
@@ -39,12 +38,7 @@ export class ProductRepository {
   }
 
   async addProducts(products: IAddProduct[]) {
-    try {
-      return await this.repository.save(this.repository.create(products));
-    } catch (e) {
-      this.logger.error(e);
-      return [];
-    }
+    return await this.repository.save(this.repository.create(products));
   }
 
   async removeProducts(ids: number[]) {
