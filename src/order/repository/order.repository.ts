@@ -25,6 +25,7 @@ export class OrderRepository {
   }
 
   async updateStatus(id: number, input: IOrderStatus) {
-    return this.repository.update(id, { status: input.status });
+    await this.repository.update(id, { status: input.status });
+    return true;
   }
 }
