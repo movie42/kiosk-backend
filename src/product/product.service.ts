@@ -26,6 +26,10 @@ export class ProductService {
     return this.productRepository.getProductsByLoader(storeId);
   }
 
+  async isProductAvailable(productId: number) {
+    return this.productRepository.isProductAvailable(productId);
+  }
+
   async addProducts(products: IAddProduct[]) {
     const addedProducts = await this.productRepository.addProducts(products);
     if (addedProducts.length == 0) {
@@ -63,5 +67,9 @@ export class ProductService {
 
   async removeOptions(optionIds: number[]) {
     return this.productOptionRepository.removeOptions(optionIds);
+  }
+
+  async toggleIsAvailable(id: number) {
+    return this.productRepository.toggleIsAvailable(id);
   }
 }
