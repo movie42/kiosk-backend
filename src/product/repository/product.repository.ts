@@ -47,7 +47,8 @@ export class ProductRepository {
   }
 
   async updateProduct(productId: number, product: IEditProduct) {
-    await this.repository.update(productId, product);
+    const updatedProduct = this.repository.create(product);
+    await this.repository.update(productId, updatedProduct);
     return true;
   }
 
