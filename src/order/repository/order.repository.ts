@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Between, Repository } from 'typeorm';
 
 import { IPagination } from '../../common/interface/pagination';
 import { Order } from '../entity/order.entity';
+import { IAddOrderDAO } from '../interface/add-order-dao.interface';
 import { IOrderStatus } from '../interface/order-status.interface';
 import { IStore } from '../interface/store-id.interface';
 
@@ -21,6 +22,20 @@ export class OrderRepository {
       },
       take: pagination.limit,
       skip: pagination.offset,
+    });
+  }
+
+  async addOrder(args: IAddOrderDAO) {
+    const newOrder = await this.repository.save(this.repository.create(args));
+    return newOrder.id;
+  }
+
+  async getNumberOfOrders(year: number, month: number, day: number, start: number, end: number) {
+    return await this.repository.count({
+      where: {
+        createdAt: Between(new Date(year, month, day, 0, 0, 0), new Date(year, month, day, 23, 59, 59)),
+        number: Between(start, end),
+      },
     });
   }
 
