@@ -5,6 +5,7 @@ import { Between, Repository } from 'typeorm';
 import { IPagination } from '../../common/interface/pagination';
 import { Order } from '../entity/order.entity';
 import { IAddOrderDAO } from '../interface/add-order-dao.interface';
+import { IGetAmountOrders } from '../interface/get-amount-of-order.interface';
 import { IOrderStatus } from '../interface/order-status.interface';
 import { IStore } from '../interface/store-id.interface';
 
@@ -30,11 +31,14 @@ export class OrderRepository {
     return newOrder.id;
   }
 
-  async getNumberOfOrders(year: number, month: number, day: number, start: number, end: number) {
+  async getAmountOfOrders(args: IGetAmountOrders) {
     return await this.repository.count({
       where: {
-        createdAt: Between(new Date(year, month, day, 0, 0, 0), new Date(year, month, day, 23, 59, 59)),
-        number: Between(start, end),
+        createdAt: Between(
+          new Date(args.year, args.month, args.day, 0, 0, 0),
+          new Date(args.year, args.month, args.day, 23, 59, 59),
+        ),
+        number: Between(args.start, args.end),
       },
     });
   }

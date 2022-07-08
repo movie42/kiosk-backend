@@ -1,4 +1,4 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException } from '@nestjs/common';
 
 import { IPagination } from '../common/interface/pagination';
 import { ProductRepository } from '../product/repository/product.repository';
@@ -31,23 +31,29 @@ export class OrderService {
     return products.map((p) => p.price);
   }
 
-  async getNumberOfOrders(type: OrderType) {
+  async getAmountOfOrders(type: OrderType) {
     const today = new Date();
     const year = today.getFullYear();
     const month = today.getMonth();
     const day = today.getDate();
 
     return type == OrderType.HERE
-      ? this.orderRepository.getNumberOfOrders(year, month, day, 1000, 1999)
-      : this.orderRepository.getNumberOfOrders(year, month, day, 2000, 2999);
+      ? this.orderRepository.getAmountOfOrders({ year, month, day, start: 1000, end: 1999 })
+      : this.orderRepository.getAmountOfOrders({ year, month, day, start: 2000, end: 2999 });
   }
 
   async createOrderNumber(type: OrderType) {
-    const count = await this.getNumberOfOrders(type);
+    const count = await this.getAmountOfOrders(type);
     if (count >= 999) {
       throw new InternalServerErrorException('주문 번호가 초과되었습니다.');
     }
-    return count + 1000 * type + 1;
+    if (type === OrderType.HERE) {
+      return 1000 + count + 1;
+    } else if (type === OrderType.GO) {
+      return 2000 + count + 1;
+    }
+
+    throw new BadRequestException(' OrderType이 잘못되었습니다.');
   }
 
   async getOrderPrice(products: IOrderProduct[]) {
@@ -66,7 +72,7 @@ export class OrderService {
     });
     const products = args.products.map((product) => {
       return {
-        orderId: orderId,
+        orderId,
         ...product,
       };
     });
