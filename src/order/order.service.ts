@@ -4,9 +4,10 @@ import { IPagination } from '../common/interface/pagination';
 import { ProductRepository } from '../product/repository/product.repository';
 import { OrderStatusType } from './enum/order-status';
 import { OrderType } from './enum/order-type';
-import { IOrderProduct } from './interface/add-order-product.interface';
+import { IAddOrderProduct } from './interface/add-order-product.interface';
 import { IAddOrder } from './interface/add-order.interface';
 import { IStore } from './interface/store-id.interface';
+import { IUpdateOrderProduct } from './interface/update-order-product.interface';
 import { OrderProductRepository } from './repository/order-product.repository';
 import { OrderRepository } from './repository/order.repository';
 
@@ -42,6 +43,19 @@ export class OrderService {
       : this.orderRepository.getAmountOfOrders({ year, month, day, start: 2000, end: 2999 });
   }
 
+  async getOrderPrice(products: IAddOrderProduct[]) {
+    const productIds = products.map((p) => p.productId);
+    const productPrices = await this.getProductPrices(productIds);
+    const totalPriceByProduct = products.map((p, idx) => p.amount * productPrices[idx]);
+    return totalPriceByProduct.reduce((prev, curr) => prev + curr, 0);
+  }
+
+  async getOrderProducts(orderId: number) {
+    const order = await this.orderRepository.getOrderProducts(orderId);
+    const orderProducts = order.orderProducts;
+    return orderProducts;
+  }
+
   async createOrderNumber(type: OrderType) {
     const count = await this.getAmountOfOrders(type);
     if (count >= 999) {
@@ -56,11 +70,15 @@ export class OrderService {
     throw new BadRequestException(' OrderType이 잘못되었습니다.');
   }
 
-  async getOrderPrice(products: IOrderProduct[]) {
-    const productIds = products.map((p) => p.productId);
-    const productPrices = await this.getProductPrices(productIds);
-    const totalPriceByProduct = products.map((p, idx) => p.amount * productPrices[idx]);
-    return totalPriceByProduct.reduce((prev, curr) => prev + curr);
+  async addOrderProducts(orderId: number, products: IAddOrderProduct[]) {
+    const productsDAO = products.map((product) => {
+      return {
+        orderId,
+        ...product,
+      };
+    });
+
+    return await this.orderProductRepository.updateOrderProducts(productsDAO);
   }
 
   async addOrder(args: IAddOrder) {
@@ -71,17 +89,34 @@ export class OrderService {
       storeId: args.storeId,
       number: orderNum,
     });
-    const products = args.products.map((product) => {
+    await this.addOrderProducts(orderId, args.products);
+    return orderNum;
+  }
+
+  async updateOrderPrice(orderId: number) {
+    const allProducts = await this.getOrderProducts(orderId);
+    const price = await this.getOrderPrice(allProducts);
+    return this.orderRepository.updateOrderPrice(orderId, price);
+  }
+
+  async updateOrderProducts(orderId: number, products: IUpdateOrderProduct[]) {
+    const productsDAO = products.map((product) => {
       return {
         orderId,
         ...product,
       };
     });
-    await this.orderProductRepository.addOrderProducts(products);
-    return orderNum;
+
+    await this.orderProductRepository.updateOrderProducts(productsDAO);
+    return this.updateOrderPrice(orderId);
   }
 
   async updateOrderStatus(id: number, status: OrderStatusType) {
     return this.orderRepository.updateStatus(id, status);
+  }
+
+  async removeOrderProducts(orderId: number, orderProductIds: number[]) {
+    await this.orderProductRepository.removeOrderProducts(orderProductIds);
+    return this.updateOrderPrice(orderId);
   }
 }

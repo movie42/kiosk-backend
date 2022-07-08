@@ -1,11 +1,12 @@
 import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, Unique } from 'typeorm';
 
 import { Product } from '../../product/entity/product.entity';
 import { Order } from './order.entity';
 
 @ObjectType()
 @Entity()
+@Unique('orderAndProduct', ['orderId', 'productId'])
 export class OrderProduct {
   @Field(() => ID)
   @PrimaryGeneratedColumn({ type: 'int', unsigned: true })
