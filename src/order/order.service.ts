@@ -59,7 +59,8 @@ export class OrderService {
   async getOrderPrice(products: IOrderProduct[]) {
     const productIds = products.map((p) => p.productId);
     const productPrices = await this.getProductPrices(productIds);
-    return products.map((p, idx) => p.amount * productPrices[idx]).reduce((prev, curr) => prev + curr);
+    const totalPriceByProduct = products.map((p, idx) => p.amount * productPrices[idx]);
+    return totalPriceByProduct.reduce((prev, curr) => prev + curr);
   }
 
   async addOrder(args: IAddOrder) {
