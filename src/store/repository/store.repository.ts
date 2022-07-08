@@ -39,8 +39,9 @@ export class StoreRepository {
 
   async toggleIsAvailable(id: number) {
     await this.repository
-      .createQueryBuilder('store')
-      .update('isAvailable = !isAvailable')
+      .createQueryBuilder()
+      .update('store')
+      .set({ isAvailable: () => '!isAvailable' })
       .where('id = :id', { id })
       .execute();
     return true;

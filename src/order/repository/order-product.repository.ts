@@ -4,6 +4,7 @@ import * as DataLoader from 'dataloader';
 import { In, Repository } from 'typeorm';
 
 import { OrderProduct } from '../entity/order-product.entity';
+import { IOrderProductDAO } from '../interface/add-order-product-dao.interface';
 
 @Injectable()
 export class OrderProductRepository {
@@ -23,5 +24,10 @@ export class OrderProductRepository {
 
   async getOrderProductsByOrderId(orderIds: number[]) {
     return this.repository.findBy({ orderId: In(orderIds) });
+  }
+
+  async addOrderProducts(products: IOrderProductDAO[]) {
+    await this.repository.save(this.repository.create(products));
+    return true;
   }
 }

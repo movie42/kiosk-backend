@@ -33,6 +33,10 @@ export class Product {
   @Column({ type: 'int' })
   storeId: number;
 
+  @Field()
+  @Column({ type: 'boolean', default: false })
+  isAvailable: boolean;
+
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 

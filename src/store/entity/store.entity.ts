@@ -1,6 +1,7 @@
 import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
 import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
+import { Order } from '../../order/entity/order.entity';
 import { Product } from '../../product/entity/product.entity';
 import { User } from '../../user/entity/user.entity';
 
@@ -43,4 +44,8 @@ export class Store {
 
   @OneToMany(() => Product, (item) => item.store)
   products: Product[];
+
+  @Field(() => [Order])
+  @OneToMany(() => Order, (item) => item.store, { eager: true })
+  orders: Order[];
 }

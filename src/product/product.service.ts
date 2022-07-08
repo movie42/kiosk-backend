@@ -26,8 +26,13 @@ export class ProductService {
     return this.productRepository.getProductsByLoader(storeId);
   }
 
+  async isProductAvailable(productId: number) {
+    return this.productRepository.isProductAvailable(productId);
+  }
+
   async addProducts(products: IAddProduct[]) {
-    return this.productRepository.addProducts(products);
+    const addedProducts = await this.productRepository.addProducts(products);
+    return addedProducts.map((product) => product.id);
   }
 
   async removeProducts(productIds: number[]) {
@@ -59,5 +64,9 @@ export class ProductService {
 
   async removeOptions(optionIds: number[]) {
     return this.productOptionRepository.removeOptions(optionIds);
+  }
+
+  async toggleIsAvailable(id: number) {
+    return this.productRepository.toggleIsAvailable(id);
   }
 }

@@ -1,4 +1,4 @@
-import { Args, Mutation, Parent, ResolveField, Resolver } from '@nestjs/graphql';
+import { Args, Int, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
 
 import { AddProductOptionInput } from './dto/add-product-option.input';
 import { AddProductInput } from './dto/add-product.input';
@@ -13,7 +13,13 @@ import { ProductService } from './product.service';
 @Resolver(() => Product)
 export class ProductResolver {
   constructor(private readonly productService: ProductService) {}
-  @Mutation(() => Boolean)
+
+  @Query(() => Boolean)
+  async productIsAvailable(@Args('id') id: number) {
+    return this.productService.isProductAvailable(id);
+  }
+
+  @Mutation(() => [Int])
   async addProducts(@Args({ name: 'products', type: () => [AddProductInput] }) args: AddProductInput[]) {
     return this.productService.addProducts(args);
   }
@@ -45,6 +51,11 @@ export class ProductResolver {
     @Args({ name: 'optionIds', type: () => removeProductOptionInput }) args: removeProductOptionInput,
   ) {
     return this.productService.removeOptions(args.OptionIds);
+  }
+
+  @Mutation(() => Boolean)
+  async toggleProductIsAvailable(@Args('id') id: number) {
+    return this.productService.toggleIsAvailable(id);
   }
 
   @ResolveField(() => [Option])
