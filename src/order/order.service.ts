@@ -2,10 +2,10 @@ import { BadRequestException, Injectable, InternalServerErrorException } from '@
 
 import { IPagination } from '../common/interface/pagination';
 import { ProductRepository } from '../product/repository/product.repository';
+import { OrderStatusType } from './enum/order-status';
 import { OrderType } from './enum/order-type';
 import { IOrderProduct } from './interface/add-order-product.interface';
 import { IAddOrder } from './interface/add-order.interface';
-import { IOrderStatus } from './interface/order-status.interface';
 import { IStore } from './interface/store-id.interface';
 import { OrderProductRepository } from './repository/order-product.repository';
 import { OrderRepository } from './repository/order.repository';
@@ -81,7 +81,7 @@ export class OrderService {
     return orderNum;
   }
 
-  async updateOrderStatus(id: number, input: IOrderStatus) {
-    return this.orderRepository.updateStatus(id, input);
+  async updateOrderStatus(id: number, status: OrderStatusType) {
+    return this.orderRepository.updateStatus(id, status);
   }
 }
