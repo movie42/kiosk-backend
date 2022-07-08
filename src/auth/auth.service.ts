@@ -33,7 +33,7 @@ export class AuthService {
   }
 
   async loginByRefreshToken(user: request.User): Promise<TokenOutput> {
-    return { accessToken: this.signJsonWebToken(user.id, user.role).accessToken };
+    return this.signJsonWebToken(user.id, user.role);
   }
 
   async signup(input: IAddUser) {
