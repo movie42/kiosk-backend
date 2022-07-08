@@ -3,7 +3,7 @@ import { Args, Int, Mutation, Parent, Query, ResolveField, Resolver } from '@nes
 import { PaginationArgs } from '../common/dto/pagination.args';
 import { Product } from '../product/entity/product.entity';
 import { AddOrderInput } from './dto/add-order.input';
-import { OrderStatusInput } from './dto/order-status.input';
+import { OrderStatusArgs } from './dto/order-status.args';
 import { StoreIdArgs } from './dto/store-id.args';
 import { Order } from './entity/order.entity';
 import { OrderService } from './order.service';
@@ -23,8 +23,8 @@ export class OrderResolver {
   }
 
   @Mutation(() => Boolean)
-  async updateOrderStatus(@Args('id', { type: () => Int }) id: number, @Args('status') input: OrderStatusInput) {
-    return this.orderService.updateOrderStatus(id, input);
+  async updateOrderStatus(@Args('id', { type: () => Int }) id: number, @Args() args: OrderStatusArgs) {
+    return this.orderService.updateOrderStatus(id, args.status);
   }
 
   @ResolveField(() => [Product])
