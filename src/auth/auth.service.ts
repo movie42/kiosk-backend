@@ -3,6 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 
 import { Role } from '../common/enum';
+import * as request from '../common/interface/request';
 import { IAddUser } from '../user/interface/add-user.interface';
 import { UserService } from '../user/user.service';
 import { TokenOutput } from './dto/token.output';
@@ -29,6 +30,10 @@ export class AuthService {
     }
 
     return this.signJsonWebToken(user.id, Role.ADMIN);
+  }
+
+  async loginByRefreshToken(user: request.User): Promise<TokenOutput> {
+    return { accessToken: this.signJsonWebToken(user.id, user.role).accessToken };
   }
 
   async signup(input: IAddUser) {

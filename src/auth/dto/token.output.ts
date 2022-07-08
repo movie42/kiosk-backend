@@ -6,5 +6,5 @@ export class TokenOutput {
   accessToken: string;
 
   @Field()
-  refreshToken: string;
+  refreshToken?: string;
 }
