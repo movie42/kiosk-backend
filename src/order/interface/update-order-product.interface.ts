@@ -1,6 +1,6 @@
 export interface IUpdateOrderProduct {
   id?: number;
-  productId: number;
+  productId?: number;
   amount: number;
   productOptionIds: number[];
 }

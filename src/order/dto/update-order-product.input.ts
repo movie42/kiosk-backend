@@ -10,8 +10,9 @@ export class UpdateOrderProductInput {
   @Field(() => Int, { nullable: true })
   id: number;
 
+  @IsOptional()
   @IsInt()
-  @Field(() => Int)
+  @Field(() => Int, { nullable: true })
   productId: number;
 
   @IsInt()
