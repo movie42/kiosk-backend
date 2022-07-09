@@ -3,7 +3,7 @@ import { Type } from 'class-transformer';
 import { ArrayNotEmpty, ArrayUnique, IsArray, IsEnum, IsInt, ValidateNested } from 'class-validator';
 
 import { OrderType } from '../enum/order-type';
-import { OrderProductInput } from './add-order-product.input';
+import { AddOrderProductInput } from './add-order-product.input';
 
 @InputType()
 export class AddOrderInput {
@@ -15,9 +15,9 @@ export class AddOrderInput {
   @ArrayNotEmpty()
   @ArrayUnique()
   @ValidateNested({ each: true })
-  @Field(() => [OrderProductInput])
-  @Type(() => OrderProductInput)
-  products: OrderProductInput[];
+  @Field(() => [AddOrderProductInput])
+  @Type(() => AddOrderProductInput)
+  products: AddOrderProductInput[];
 
   @IsEnum(OrderType)
   @Field(() => OrderType)

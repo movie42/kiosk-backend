@@ -26,6 +26,10 @@ export class OrderRepository {
     });
   }
 
+  async getOrderProducts(id: number) {
+    return this.repository.findOne({ select: ['orderProducts'], where: { id: id } });
+  }
+
   async addOrder(args: IAddOrderDAO) {
     const newOrder = await this.repository.save(this.repository.create(args));
     return newOrder.id;
@@ -45,6 +49,10 @@ export class OrderRepository {
 
   async updateStatus(id: number, status: OrderStatusType) {
     await this.repository.update(id, { status });
+  }
+
+  async updateOrderPrice(id: number, price: number) {
+    await this.repository.update(id, { price });
     return true;
   }
 }

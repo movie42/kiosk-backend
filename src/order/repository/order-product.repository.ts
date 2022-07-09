@@ -4,7 +4,7 @@ import * as DataLoader from 'dataloader';
 import { In, Repository } from 'typeorm';
 
 import { OrderProduct } from '../entity/order-product.entity';
-import { IOrderProductDAO } from '../interface/add-order-product-dao.interface';
+import { IOrderProductDAO } from '../interface/order-product-dao.interface';
 
 @Injectable()
 export class OrderProductRepository {
@@ -26,8 +26,23 @@ export class OrderProductRepository {
     return this.repository.findBy({ orderId: In(orderIds) });
   }
 
-  async addOrderProducts(products: IOrderProductDAO[]) {
+  async updateOrderProducts(products: IOrderProductDAO[]) {
     await this.repository.save(this.repository.create(products));
     return true;
+  }
+
+  async removeOrderProducts(orderProductIds: number[]) {
+    await this.repository.delete(orderProductIds);
+    return true;
+  }
+
+  async existOrderProduct(orderId: number, productId: number) {
+    const count = await this.repository.count({
+      where: {
+        orderId: orderId,
+        productId: productId,
+      },
+    });
+    return count > 0;
   }
 }
