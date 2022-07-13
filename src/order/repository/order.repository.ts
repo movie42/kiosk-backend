@@ -1,12 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Between, Repository } from 'typeorm';
+import { Between, In, Repository } from 'typeorm';
 
 import { IPagination } from '../../common/interface/pagination';
 import { Order } from '../entity/order.entity';
 import { OrderStatusType } from '../enum/order-status';
 import { IAddOrderDAO } from '../interface/add-order-dao.interface';
 import { IGetAmountOrders } from '../interface/get-amount-of-order.interface';
+import { IGetTodayOrders } from '../interface/get-today-orders.interface';
 import { IStore } from '../interface/store-id.interface';
 
 @Injectable()
@@ -28,6 +29,23 @@ export class OrderRepository {
 
   async getOrderProducts(id: number) {
     return this.repository.findOne({ select: ['orderProducts'], where: { id: id } });
+  }
+
+  async getTodayOrders(args: IGetTodayOrders, pagination: IPagination) {
+    return this.repository.find({
+      where: {
+        storeId: In(args.storeIds),
+        createdAt: Between(
+          new Date(args.year, args.month, args.day, 0, 0, 0),
+          new Date(args.year, args.month, args.day, 23, 59, 59),
+        ),
+      },
+      order: {
+        id: 'DESC',
+      },
+      take: pagination.limit,
+      skip: pagination.offset,
+    });
   }
 
   async addOrder(args: IAddOrderDAO) {

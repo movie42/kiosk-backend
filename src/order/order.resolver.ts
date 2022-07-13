@@ -1,6 +1,8 @@
 import { Args, Int, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
 
+import { RequestInfo } from '../common/decorator';
 import { PaginationArgs } from '../common/dto/pagination.args';
+import { IRequest } from '../common/interface/request';
 import { Product } from '../product/entity/product.entity';
 import { AddOrderInput } from './dto/add-order.input';
 import { RemoveOrderProductInput } from './dto/delete-order-product.input';
@@ -22,6 +24,11 @@ export class OrderResolver {
   @Query(() => [Order])
   async orders(@Args() args: StoreIdArgs, @Args() paginationArgs: PaginationArgs) {
     return this.orderService.getOrders(args, paginationArgs);
+  }
+
+  @Query(() => [Order])
+  async todayOrders(@RequestInfo() req: Required<IRequest>, @Args() paginationArgs: PaginationArgs) {
+    return this.orderService.getTodayOrders(req.user.id, paginationArgs);
   }
 
   @Mutation(() => Int)

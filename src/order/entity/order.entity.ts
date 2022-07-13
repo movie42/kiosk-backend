@@ -47,7 +47,7 @@ export class Order {
   @OneToMany(() => OrderProduct, (item) => item.order, { eager: true })
   orderProducts: OrderProduct[];
 
-  @ManyToOne(() => Store, (entity) => entity.orders)
+  @ManyToOne(() => Store, (entity) => entity.orders, { createForeignKeyConstraints: false })
   @JoinColumn({ name: 'storeId' })
   store: Store;
 }
