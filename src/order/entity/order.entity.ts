@@ -33,6 +33,14 @@ export class Order {
   @Column({ type: 'int' })
   storeId: number;
 
+  @Field()
+  @Column({ type: 'varchar', length: 16 })
+  imp_uid: string;
+
+  @Field()
+  @Column({ type: 'varchar', length: 40 })
+  merchant_uid: string;
+
   @Field(() => OrderStatusType)
   @Column({ type: 'enum', enum: OrderStatusType, default: OrderStatusType.READY })
   status: OrderStatusType;

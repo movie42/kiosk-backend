@@ -69,6 +69,8 @@ export class OrderService {
     const orderId = await this.orderRepository.addOrder({
       price: price,
       storeId: args.storeId,
+      imp_uid: args.imp_uid,
+      merchant_uid: args.merchant_uid,
       number: orderNum,
     });
     const products = args.products.map((product) => {
