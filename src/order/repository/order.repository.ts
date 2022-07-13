@@ -4,9 +4,9 @@ import { Between, Repository } from 'typeorm';
 
 import { IPagination } from '../../common/interface/pagination';
 import { Order } from '../entity/order.entity';
+import { OrderStatusType } from '../enum/order-status';
 import { IAddOrderDAO } from '../interface/add-order-dao.interface';
 import { IGetAmountOrders } from '../interface/get-amount-of-order.interface';
-import { IOrderStatus } from '../interface/order-status.interface';
 import { IStore } from '../interface/store-id.interface';
 
 @Injectable()
@@ -26,6 +26,10 @@ export class OrderRepository {
     });
   }
 
+  async getOrderProducts(id: number) {
+    return this.repository.findOne({ select: ['orderProducts'], where: { id: id } });
+  }
+
   async addOrder(args: IAddOrderDAO) {
     const newOrder = await this.repository.save(this.repository.create(args));
     return newOrder.id;
@@ -43,8 +47,12 @@ export class OrderRepository {
     });
   }
 
-  async updateStatus(id: number, input: IOrderStatus) {
-    await this.repository.update(id, { status: input.status });
+  async updateStatus(id: number, status: OrderStatusType) {
+    await this.repository.update(id, { status });
+  }
+
+  async updateOrderPrice(id: number, price: number) {
+    await this.repository.update(id, { price });
     return true;
   }
 }

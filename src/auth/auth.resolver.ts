@@ -1,6 +1,8 @@
-import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { UnauthorizedException } from '@nestjs/common';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
-import { RequestInfo } from '../common/decorator';
+import { RequestInfo, Roles } from '../common/decorator';
+import { Role } from '../common/enum';
 import { IRequest } from '../common/interface/request';
 import { UserService } from '../user/user.service';
 import { AuthService } from './auth.service';
@@ -15,6 +17,15 @@ export class AuthResolver {
   @Mutation(() => TokenOutput)
   async login(@Args() args: LoginArgs) {
     return this.authService.login(args.email, args.password);
+  }
+
+  @Roles(Role.ADMIN)
+  @Query(() => TokenOutput)
+  async loginByRefreshToken(@RequestInfo() req: Required<IRequest>) {
+    if (!req.user.refresh) {
+      throw new UnauthorizedException();
+    }
+    return this.authService.loginByRefreshToken(req.user);
   }
 
   @Mutation(() => TokenOutput)
