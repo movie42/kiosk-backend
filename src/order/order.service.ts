@@ -44,9 +44,18 @@ export class OrderService {
   }
 
   async getOrderPrice(products: IAddOrderProduct[]) {
-    const productIds = products.map((p) => p.productId);
+    const productIds: number[] = [];
+    const amounts = products.reduce((amounts, product) => {
+      const productId = product.productId;
+      if (!amounts[productId]) {
+        amounts[productId] = 0;
+        productIds.push(productId);
+      }
+      amounts[productId] += product.amount;
+      return amounts;
+    }, {});
     const productPrices = await this.getProductPrices(productIds);
-    const totalPriceByProduct = products.map((p, idx) => p.amount * productPrices[idx]);
+    const totalPriceByProduct = productIds.map((productId, idx) => amounts[productId] * productPrices[idx]);
     return totalPriceByProduct.reduce((prev, curr) => prev + curr, 0);
   }
 

@@ -6,7 +6,7 @@ import { Order } from './order.entity';
 
 @ObjectType()
 @Entity()
-@Unique('orderAndProduct', ['orderId', 'productId'])
+@Unique('orderAndOptionId', ['orderId', 'productOptionId'])
 export class OrderProduct {
   @Field(() => ID)
   @PrimaryGeneratedColumn({ type: 'int', unsigned: true })
@@ -24,9 +24,9 @@ export class OrderProduct {
   @Column({ type: 'int' })
   amount: number;
 
-  @Field(() => [Int])
-  @Column('simple-array')
-  productOptionIds: number[];
+  @Field(() => Int)
+  @Column({ type: 'int' })
+  productOptionId: number;
 
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;

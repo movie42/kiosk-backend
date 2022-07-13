@@ -1,7 +1,5 @@
 import { Field, InputType, Int } from '@nestjs/graphql';
-import { ArrayNotEmpty, IsArray, IsInt, IsOptional, IsPositive } from 'class-validator';
-
-import { IsSameLength } from '../custom-validator/IsSameLength';
+import { IsInt, IsOptional, IsPositive } from 'class-validator';
 
 @InputType()
 export class UpdateOrderProductInput {
@@ -20,10 +18,8 @@ export class UpdateOrderProductInput {
   @Field(() => Int)
   amount: number;
 
-  @IsArray()
-  @ArrayNotEmpty()
-  @IsInt({ each: true })
-  @IsSameLength('amount', { message: 'amount와 productOptionIds의 길이는 일치해야 합니다.' })
-  @Field(() => [Int])
-  productOptionIds: number[];
+  @IsOptional()
+  @IsInt()
+  @Field(() => Int, { nullable: true })
+  productOptionId: number;
 }
