@@ -101,6 +101,8 @@ export class OrderService {
     const orderId = await this.orderRepository.addOrder({
       price: price,
       storeId: args.storeId,
+      imp_uid: args.imp_uid,
+      merchant_uid: args.merchant_uid,
       number: orderNum,
     });
     await this.addOrderProducts(orderId, args.products);
