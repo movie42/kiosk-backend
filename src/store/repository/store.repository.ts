@@ -18,6 +18,10 @@ export class StoreRepository {
     return this.repository.findBy({ ownerId });
   }
 
+  async getStoreIdsByUserId(ownerId: number) {
+    return this.repository.find({ where: { ownerId }, select: ['id'] });
+  }
+
   async getStoreById(id: number) {
     return this.repository.findOneBy({ id });
   }

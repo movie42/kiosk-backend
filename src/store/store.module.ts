@@ -11,5 +11,6 @@ import { StoreService } from './store.service';
 @Module({
   imports: [ProductModule, TypeOrmModule.forFeature([Store, Option])],
   providers: [StoreResolver, StoreService, StoreRepository],
+  exports: [StoreRepository],
 })
 export class StoreModule {}

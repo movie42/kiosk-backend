@@ -2,6 +2,7 @@ import { BadRequestException, Injectable, InternalServerErrorException } from '@
 
 import { IPagination } from '../common/interface/pagination';
 import { ProductRepository } from '../product/repository/product.repository';
+import { StoreRepository } from '../store/repository/store.repository';
 import { OrderStatusType } from './enum/order-status';
 import { OrderType } from './enum/order-type';
 import { IAddOrderProduct } from './interface/add-order-product.interface';
@@ -16,6 +17,7 @@ export class OrderService {
   constructor(
     private readonly orderRepository: OrderRepository,
     private readonly orderProductRepository: OrderProductRepository,
+    private readonly storeRepository: StoreRepository,
     private readonly productRepository: ProductRepository,
   ) {}
 
@@ -25,6 +27,18 @@ export class OrderService {
 
   async getOrders(args: IStore, pagination: IPagination) {
     return this.orderRepository.getOrders(args, pagination);
+  }
+
+  async getTodayOrders(ownerId: number, pagination: IPagination) {
+    const stores = await this.storeRepository.getStoreIdsByUserId(ownerId);
+    const storeIds = stores.map((store) => store.id);
+
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth();
+    const day = today.getDate();
+
+    return this.orderRepository.getTodayOrders({ year, month, day, storeIds }, pagination);
   }
 
   async getProductPrices(productIds: number[]) {
