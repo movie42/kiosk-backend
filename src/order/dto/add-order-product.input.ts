@@ -1,5 +1,5 @@
 import { Field, InputType, Int } from '@nestjs/graphql';
-import { ArrayNotEmpty, IsArray, IsInt, IsPositive } from 'class-validator';
+import { IsInt, IsPositive } from 'class-validator';
 
 @InputType()
 export class AddOrderProductInput {
@@ -12,9 +12,7 @@ export class AddOrderProductInput {
   @Field(() => Int)
   amount: number;
 
-  @IsArray()
-  @ArrayNotEmpty()
-  @IsInt({ each: true })
-  @Field(() => [Int])
-  productOptionIds: number[];
+  @IsInt()
+  @Field(() => Int)
+  productOptionId: number;
 }
