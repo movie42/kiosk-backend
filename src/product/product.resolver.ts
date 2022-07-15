@@ -42,8 +42,10 @@ export class ProductResolver {
   }
 
   @Mutation(() => Boolean)
-  async updateProductOption(@Args({ name: 'option', type: () => EditProductOptionInput }) arg: EditProductOptionInput) {
-    return this.productService.updateOption(arg.optionId, arg);
+  async updateProductOptions(
+    @Args({ name: 'option', type: () => [EditProductOptionInput] }) args: EditProductOptionInput[],
+  ) {
+    return this.productService.updateOptions(args);
   }
 
   @Mutation(() => Boolean)

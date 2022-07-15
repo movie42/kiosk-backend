@@ -58,8 +58,11 @@ export class ProductService {
     return this.productOptionRepository.addOptions(options);
   }
 
-  async updateOption(optionId: number, option: IEditOption) {
-    return this.productOptionRepository.updateOption(optionId, option);
+  async updateOptions(options: IEditOption[]) {
+    for (const option of options) {
+      await this.productOptionRepository.updateOption(option);
+    }
+    return true;
   }
 
   async removeOptions(optionIds: number[]) {
