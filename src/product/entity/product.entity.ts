@@ -48,5 +48,5 @@ export class Product {
   options: Option[];
 
   @OneToMany(() => OrderProduct, (item) => item.product)
-  orders: OrderProduct[];
+  orderProducts: OrderProduct[];
 }
