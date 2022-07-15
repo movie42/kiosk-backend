@@ -67,6 +67,7 @@ export class OrderRepository {
 
   async updateStatus(id: number, status: OrderStatusType) {
     await this.repository.update(id, { status });
+    return true;
   }
 
   async updateOrderPrice(id: number, price: number) {
