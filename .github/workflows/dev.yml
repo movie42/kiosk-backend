@@ -1,7 +1,7 @@
 name: Dev Depoly
 
 on:
-  pull_request:
+  push:
     branches: [dev]
 
 jobs:
