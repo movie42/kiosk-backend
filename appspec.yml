@@ -2,16 +2,16 @@ version: 0.0
 os: linux
 files:
   - source: /
-    destination: /home/ubuntu/server
+    destination: /home/ubuntu/serverdev
     overwrite: yes
 permissions:
-  - object: /home/ubuntu/server
+  - object: /home/ubuntu/serverdev
     owner: ubuntu
     group: ubuntu
     mode: 755
 hooks:
   BeforeInstall:
-    - location: scripts/before-bedeploy.sh
+    - location: scripts/before-be-dev-deploy.sh
       timeout: 180
       runas: ubuntu
   AfterInstall:
