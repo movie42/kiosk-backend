@@ -1,43 +1,43 @@
-name: Dev Depoly
+# name: Dev Depoly
 
-on:
-  pull_request:
-    branches: [dev]
+# on:
+#   pull_request:
+#     branches: [dev]
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [16.x]
+#     strategy:
+#       matrix:
+#         node-version: [16.x]
 
-    steps:
-      - uses: actions/checkout@v3
-      - name: Setup Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
-      - run: yarn
-      - run: CI=false yarn build
-      - name: zip create
-        run: zip -qq -r ./kiosk-be-dev.zip .
-        shell: bash
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+#     steps:
+#       - uses: actions/checkout@v3
+#       - name: Setup Node.js ${{ matrix.node-version }}
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: ${{ matrix.node-version }}
+#           cache: 'npm'
+#       - run: yarn
+#       - run: CI=false yarn build
+#       - name: zip create
+#         run: zip -qq -r ./kiosk-be-dev.zip .
+#         shell: bash
+#       - name: Configure AWS credentials
+#         uses: aws-actions/configure-aws-credentials@v1
+#         with:
+#           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#           aws-secret-access-key: ${{ secrets.AWS_ACCESS_KEY }}
+#           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Upload to S3
-        run: |
-          aws s3 cp --region ap-northeast-2 ./kiosk-be-dev.zip s3://kiosk-photo/ec2/kiosk-be-dev.zip
+#       - name: Upload to S3
+#         run: |
+#           aws s3 cp --region ap-northeast-2 ./kiosk-be-dev.zip s3://kiosk-photo/ec2/kiosk-be-dev.zip
 
-      - name: Depoly EC2
-        run: aws deploy create-deployment
-          --application-name kiosk-code-depoly
-          --deployment-config-name CodeDeployDefault.OneAtATime
-          --deployment-group-name kiosk-front-depoly
-          --s3-location bucket=kiosk-photo,key=ec2/kiosk-be-dev.zip,bundleType=zip
+#       - name: Depoly EC2
+#         run: aws deploy create-deployment
+#           --application-name kiosk-code-depoly
+#           --deployment-config-name CodeDeployDefault.OneAtATime
+#           --deployment-group-name kiosk-front-depoly
+#           --s3-location bucket=kiosk-photo,key=ec2/kiosk-be-dev.zip,bundleType=zip
