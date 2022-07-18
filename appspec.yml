@@ -15,6 +15,6 @@ hooks:
       timeout: 180
       runas: ubuntu
   AfterInstall:
-    - location: scripts/after-fbedeploy.sh
+    - location: scripts/after-bedeploy.sh
       timeout: 180
       runas: ubuntu
