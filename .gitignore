@@ -398,6 +398,5 @@ Temporary Items
 .env
 dist
 
-config/local.js
-
+config/local.json
 ormconfig.json
