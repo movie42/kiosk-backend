@@ -2,10 +2,10 @@ version: 0.0
 os: linux
 files:
   - source: /
-    destination: /home/ubuntu/server
+    destination: /home/ubuntu/deploy/server
     overwrite: yes
 permissions:
-  - object: /home/ubuntu/server
+  - object: /home/ubuntu/deploy/server
     owner: ubuntu
     group: ubuntu
     mode: 755
