@@ -1,20 +1,20 @@
-version: 0.0
-os: linux
-files:
-  - source: /
-    destination: /home/ubuntu/deploy/server
-    overwrite: yes
-permissions:
-  - object: /home/ubuntu/deploy/server
-    owner: ubuntu
-    group: ubuntu
-    mode: 755
-hooks:
-  BeforeInstall:
-    - location: scripts/before-bedeploy.sh
-      timeout: 180
-      runas: ubuntu
-  AfterInstall:
-    - location: scripts/after-bedeploy.sh
-      timeout: 180
-      runas: ubuntu
+# version: 0.0
+# os: linux
+# files:
+#   - source: /
+#     destination: /home/ubuntu/deploy/server
+#     overwrite: yes
+# permissions:
+#   - object: /home/ubuntu/deploy/server
+#     owner: ubuntu
+#     group: ubuntu
+#     mode: 755
+# hooks:
+#   BeforeInstall:
+#     - location: scripts/before-bedeploy.sh
+#       timeout: 180
+#       runas: ubuntu
+#   AfterInstall:
+#     - location: scripts/after-bedeploy.sh
+#       timeout: 180
+#       runas: ubuntu
