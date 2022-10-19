@@ -1,8 +1,9 @@
-FROM node:16.14.2
+FROM node:16-alpine
 
-WORKDIR /App
+WORKDIR /app
 
-COPY package.json package-lock.json tsconfig.json tsconfig.build.json nest-cli.json ormconfig.json ./
+COPY package.json package-lock.json tsconfig.json tsconfig.build.json nest-cli.json ./
+COPY ormconfig.json ./
 COPY config ./config
 COPY src ./src
 
