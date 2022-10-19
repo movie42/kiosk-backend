@@ -10,4 +10,4 @@ COPY src ./src
 RUN npm ci
 RUN npm run build
 
-CMD ["npm" ,"start"]
+CMD ["npm", "run" ,"start:prod"]
