@@ -10,8 +10,8 @@ import { isProd } from './common/constant';
 import { OrderModule } from './order/order.module';
 import { ProductModule } from './product/product.module';
 import { StoreModule } from './store/store.module';
-import { UserModule } from './user/user.module';
 import { UploadsModule } from './uploads/uploads.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
