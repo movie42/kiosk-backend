@@ -19,7 +19,7 @@ import { JwtStrategy } from './strategy/jwt.strategy';
     TypeOrmModule.forFeature([User]),
     JwtModule.register({
       secret: config.get('jwt.secret'),
-      signOptions: { issuer: 'https://kiosk.kyojs.com' },
+      signOptions: { issuer: 'https://everyonekiosk.com' },
     }),
   ],
   providers: [AuthResolver, AuthService, JwtStrategy, UserService, UserRepository],

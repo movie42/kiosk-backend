@@ -33,7 +33,6 @@ export class StoreResolver {
     return this.storeService.addStore({ ...args, ownerId: req.user.id });
   }
 
-  // TODO: 소유자 권한 체크 필요
   @Mutation(() => Boolean)
   async removeStore(@Args('id') id: number) {
     return this.storeService.removeStore(id);
